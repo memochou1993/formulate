@@ -8,9 +8,9 @@ const validator = new Validator();
 
 const rules = computed(() => {
   return validator
-      .defineField('Title')
-      .required()
-      .getMessageRules();
+    .defineField('Title')
+    .required()
+    .getMessageRules();
 })
 </script>
 

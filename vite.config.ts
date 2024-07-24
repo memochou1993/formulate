@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   plugins: [
     vue(),
-    dts(),
+    dts({ include: ['lib'] }),
   ],
   build: {
     lib: {
@@ -14,6 +14,7 @@ export default defineConfig({
       name: 'MyLib',
       fileName: (format) => format === 'es' ? 'index.js' : `index.${format}.js`,
     },
+    copyPublicDir: false,
   },
   resolve: {
     alias: {
