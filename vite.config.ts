@@ -11,7 +11,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, 'lib/index.ts'),
-      name: 'MyLib',
+      name: 'Formulate',
       fileName: (format) => format === 'es' ? 'index.js' : `index.${format}.js`,
     },
     copyPublicDir: false,
