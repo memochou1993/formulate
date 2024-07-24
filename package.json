@@ -1,5 +1,5 @@
 {
-  "name": "vuetify-validator",
+  "name": "@memochou1993/vuetify-validator",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,16 +8,26 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "lint": "eslint src"
+    "lint": "eslint lib"
   },
   "devDependencies": {
     "@eslint/js": "^9.7.0",
+    "@vitejs/plugin-vue": "^4.6.2",
     "eslint": "^8.57.0",
     "globals": "^15.8.0",
     "jsdom": "^24.1.1",
     "typescript": "^5.0.2",
     "typescript-eslint": "^7.17.0",
     "vite": "^4.4.5",
-    "vitest": "^2.0.4"
+    "vite-plugin-dts": "^4.0.0-beta.1",
+    "vitest": "^2.0.4",
+    "vue": "^3.4.33",
+    "vuetify": "^3.6.13"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.js"
+    }
   }
 }

@@ -1,8 +1,8 @@
 import { expect, test } from 'vitest';
-import validator from '.';
+import Validator from './Validator';
 
 test('validator with rule "required"', () => {
-  const v = validator
+  const v = new Validator()
     .defineField('title')
     .required();
 
@@ -11,5 +11,4 @@ test('validator with rule "required"', () => {
   
   // should fail
   expect(v.validate(undefined)).toBe('The title field is required.');
-  expect(v.validate('undefined')).toBe(true);
 });

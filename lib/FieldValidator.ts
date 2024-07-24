@@ -40,8 +40,7 @@ class FieldValidator {
   buildMessageRule(name: string, args?: object) {
     const rule = rules[name](args);
     const ruleMessage = this.getRuleMessage(name, args);
-    const isRequired = name === rules.required.name;
-    return (value: unknown) => (!isRequired && isEmpty(value)) || rule(value) || ruleMessage;
+    return (value: unknown) => (name !== 'required' && isEmpty(value)) || rule(value) || ruleMessage;
   }
 
   pushMessageRule(name: string, args?: object) {
@@ -58,7 +57,7 @@ class FieldValidator {
   }
 
   required() {
-    return this.pushMessageRule(rules.required.name);
+    return this.pushMessageRule('required');
   }
 }
 
