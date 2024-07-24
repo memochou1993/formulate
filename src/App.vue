@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import { Validator } from '../dist';
+import { FormValidator } from '../dist';
 
 const form = ref();
 
-const validator = new Validator();
+const validator = new FormValidator();
 
 const rules = computed(() => {
   return validator

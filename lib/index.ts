@@ -1,7 +1,7 @@
 import FieldValidator from './FieldValidator';
-import Validator from './Validator';
+import FormValidator from './FormValidator';
 
 export {
   FieldValidator,
-  Validator,
+  FormValidator,
 };

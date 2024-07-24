@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import Validator from './Validator';
+import Validator from './FormValidator';
 
 test('validator with rule "required"', () => {
   const v = new Validator()

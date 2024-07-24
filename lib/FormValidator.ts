@@ -1,7 +1,7 @@
 import FieldValidator from './FieldValidator';
 import locales from './locales/index';
 
-class Validator {
+class FormValidator {
   locale: string;
 
   constructor() {
@@ -22,4 +22,4 @@ class Validator {
   }
 }
 
-export default Validator;
+export default FormValidator;
