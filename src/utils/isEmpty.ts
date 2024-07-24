@@ -1,8 +1,8 @@
-const isEmpty = (v: unknown) => {
-  return v === ''
-    || v === null
-    || v === undefined
-    || (Array.isArray(v) && v.length < 1);
+const isEmpty = (value: unknown): boolean => {
+  return value === ''
+    || value === null
+    || value === undefined
+    || (Array.isArray(value) && value.length < 1);
 };
 
 export default isEmpty;

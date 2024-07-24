@@ -1,6 +1,7 @@
+import Rule from '../types/Rule';
 import { isEmpty } from '../utils';
 
-const required = () => (v: unknown) => {
+const required: Rule = () => (v) => {
   return !isEmpty(v);
 };
 
