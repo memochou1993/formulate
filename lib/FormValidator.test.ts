@@ -2,9 +2,25 @@ import { expect, test } from 'vitest';
 import plugin from '../plugin';
 import FormValidator from './FormValidator';
 
-test('FormValidator with "required" rule', () => {
+test('FormValidator should throw an error for a non-existent default locale', () => {
+  const validator = new FormValidator({ defaultLocale: 'foo' })
+    .defineField('Input');
+
+  // Pass cases
+  expect(() => validator.messages).toThrowError('The messages for the locale "foo" are missing.');
+});
+
+test('FormValidator should throw an error for a non-existent fallback locale', () => {
+  const validator = new FormValidator({ fallbackLocale: 'foo' })
+    .defineField('Input');
+
+  // Pass cases
+  expect(() => validator.messages).toThrowError('The messages for the locale "foo" are missing.');
+});
+
+test('FormValidator should work with "required" rule', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .required()
     .alphaDash();
 
@@ -16,9 +32,9 @@ test('FormValidator with "required" rule', () => {
   expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('FormValidator without "required" rule', () => {
+test('FormValidator should work without "required" rule', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .alphaDash();
 
   // Pass cases
@@ -29,9 +45,9 @@ test('FormValidator without "required" rule', () => {
   expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('FormValidator with "when" condition set to true', () => {
+test('FormValidator should work with "when" condition set to true', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .when(true)
     .alphaDash();
 
@@ -43,9 +59,9 @@ test('FormValidator with "when" condition set to true', () => {
   expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('FormValidator with "when" condition set to false', () => {
+test('FormValidator should work with "when" condition set to false', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .when(false)
     .alphaDash();
 
@@ -55,9 +71,9 @@ test('FormValidator with "when" condition set to false', () => {
   expect(validator.validate('@')).toBe(true);
 });
 
-test('FormValidator with "when" condition enabling a specific rule', () => {
+test('FormValidator should work with "when" condition enabling a specific rule', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .when({ alphaDash: true })
     .required()
     .alphaDash();
@@ -70,9 +86,9 @@ test('FormValidator with "when" condition enabling a specific rule', () => {
   expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('FormValidator with "when" condition disabling a specific rule', () => {
+test('FormValidator should work with "when" condition disabling a specific rule', () => {
   const validator = new FormValidator()
-    .defineField('input')
+    .defineField('Input')
     .when({ alphaDash: false })
     .required()
     .alphaDash();
@@ -85,12 +101,12 @@ test('FormValidator with "when" condition disabling a specific rule', () => {
   expect(validator.validate(undefined)).toBe('The input field is required.');
 });
 
-test('FormValidator with plugin and "required" rule', () => {
+test('FormValidator should work with plugin and "required" rule', () => {
   const validator = new FormValidator()
     .registerPlugin(plugin)
-    .defineField('input')
+    .defineField('Input')
     .required()
-    .use('json');
+    .apply('json');
 
   // Pass cases
   expect(validator.validate('{"foo":"bar"}')).toBe(true);
@@ -100,11 +116,11 @@ test('FormValidator with plugin and "required" rule', () => {
   expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
 });
 
-test('FormValidator with plugin without "required" rule', () => {
+test('FormValidator should work with plugin without "required" rule', () => {
   const validator = new FormValidator()
     .registerPlugin(plugin)
-    .defineField('input')
-    .use('json');
+    .defineField('Input')
+    .apply('json');
 
   // Pass cases
   expect(validator.validate(undefined)).toBe(true);
@@ -114,11 +130,11 @@ test('FormValidator with plugin without "required" rule', () => {
   expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
 });
 
-test('FormValidator with plugin without "required" rule', () => {
+test('FormValidator should work with plugin without "required" rule', () => {
   const validator = new FormValidator()
     .registerPlugin(plugin)
-    .defineField('input')
-    .use('json');
+    .defineField('Input')
+    .apply('json');
 
   // Pass cases
   expect(validator.validate(undefined)).toBe(true);

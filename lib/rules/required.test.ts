@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import required from './required';
 
-test('Rule "required" with valid input should pass', () => {
+test('Rule "required" should pass with valid input', () => {
   const v = required();
 
   expect(v('foo')).toBe(true);
@@ -12,7 +12,7 @@ test('Rule "required" with valid input should pass', () => {
   expect(v({})).toBe(true);
 });
 
-test('Rule "required" with invalid input should fail', () => {
+test('Rule "required" should fail with invalid input', () => {
   const v = required();
 
   expect(v(undefined)).toBe(false);

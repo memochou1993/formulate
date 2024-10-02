@@ -1,4 +1,6 @@
 import Condition from './Condition';
+import FieldValidatorArguments from './FieldValidatorArguments';
+import FormValidatorArguments from './FormValidatorArguments';
 import Locale from './Locale';
 import LocaleMessage from './LocaleMessage';
 import Locales from './Locales';
@@ -10,6 +12,8 @@ import Rules from './Rules';
 
 export type {
   Condition,
+  FieldValidatorArguments,
+  FormValidatorArguments,
   Locale,
   LocaleMessage,
   Locales,

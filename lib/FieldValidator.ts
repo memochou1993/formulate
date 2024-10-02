@@ -1,10 +1,8 @@
-import defaultLocales from './locales';
-import defaultRules from './rules';
-import { Condition, Locales, MessageRule, MessageRuleArguments, Rules } from './types';
+import { Condition, FieldValidatorArguments, Locales, MessageRule, MessageRuleArguments, Rules } from './types';
 import { isEmpty } from './utils';
 
 class FieldValidator {
-  fieldName: string;
+  name: string;
 
   locale: string;
 
@@ -18,14 +16,22 @@ class FieldValidator {
 
   shouldSkip: boolean = false;
 
-  constructor(fieldName: string, locale: string, customRules: Rules = {}, customLocales: Locales = {}) {
-    this.fieldName = fieldName.toLowerCase();
+  constructor({
+    name,
+    locale,
+    locales,
+    rules,
+  }: FieldValidatorArguments) {
+    this.name = name;
     this.locale = locale;
-    this.locales = Object.keys(defaultLocales).reduce((acc, key) => ({ ...acc, [key]: { ...defaultLocales[key], ...(customLocales[key] || {}) } }), {});
-    this.rules = { ...defaultRules, ...customRules };
+    this.locales = locales;
+    this.rules = rules;
   }
 
-  get localeMessages() {
+  get messages() {
+    if (!(this.locale in this.locales)) {
+      throw new Error(`The messages for the locale "${this.locale}" are missing.`);
+    }
     return this.locales[this.locale];
   }
 
@@ -40,8 +46,16 @@ class FieldValidator {
     return true;
   }
 
-  getMessageRules() {
+  collect() {
     return this.shouldSkip ? [] : this.messageRules;
+  }
+
+  apply(ruleName: string, args?: MessageRuleArguments) {
+    return this.pushMessageRule(ruleName, {
+      ...args,
+      fieldName: this.name.toLowerCase(),
+      locale: this.locale,
+    });
   }
 
   getRule(name: string) {
@@ -51,22 +65,22 @@ class FieldValidator {
     return this.rules[name];
   }
 
-  getLocaleMessage(name: string) {
-    if (!(name in this.localeMessages)) {
-      throw new Error(`The locale message for the rule "${name}" is missing.`);
+  getMessage(ruleName: string) {
+    if (!(ruleName in this.messages)) {
+      throw new Error(`The message for the rule "${ruleName}" is missing.`);
     }
-    return this.localeMessages[name];
+    return this.messages[ruleName];
   }
 
-  buildMessageRule(name: string, args: MessageRuleArguments) {
-    const rule = this.getRule(name)(args);
-    const localeMessage = this.getLocaleMessage(name)(args);
-    return (value: unknown) => (name !== 'required' && isEmpty(value)) || rule(value) || localeMessage;
+  buildMessageRule(ruleName: string, args: MessageRuleArguments) {
+    const rule = this.getRule(ruleName)(args);
+    const message = this.getMessage(ruleName)(args);
+    return (value: unknown) => (ruleName !== 'required' && isEmpty(value)) || rule(value) || message;
   }
 
-  pushMessageRule(name: string, args: MessageRuleArguments) {
-    if (name in this.condition && !this.condition[name]) return this;
-    const messageRule = this.buildMessageRule(name, args);
+  pushMessageRule(ruleName: string, args: MessageRuleArguments) {
+    if (ruleName in this.condition && !this.condition[ruleName]) return this;
+    const messageRule = this.buildMessageRule(ruleName, args);
     this.messageRules.push(messageRule);
     return this;
   }
@@ -82,24 +96,16 @@ class FieldValidator {
     return this;
   }
 
-  use(name: string, args?: MessageRuleArguments) {
-    return this.pushMessageRule(name, {
-      ...args,
-      fieldName: this.fieldName,
-      locale: this.locale,
-    });
-  }
-
-  required() {
-    return this.use('required');
-  }
-
   alphaDash() {
-    return this.use('alphaDash');
+    return this.apply(this.alphaDash.name);
   }
 
   alphaDashDot() {
-    return this.use('alphaDashDot');
+    return this.apply(this.alphaDashDot.name);
+  }
+
+  required() {
+    return this.apply(this.required.name);
   }
 }
 

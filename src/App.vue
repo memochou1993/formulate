@@ -21,7 +21,7 @@ const validator = new FormValidator();
                   .defineField('Input')
                   .required()
                   .alphaDash()
-                  .getMessageRules()
+                  .collect()
               )"
             />
           </v-form>
