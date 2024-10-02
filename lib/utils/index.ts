@@ -1,4 +1,4 @@
-import isEmpty from './isEmpty.ts';
+import isEmpty from './isEmpty';
 
 export {
   isEmpty,

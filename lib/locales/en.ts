@@ -1,9 +1,9 @@
-import { LocaleMessages } from '~/types';
+import { Locale } from '~/types';
 
-const en: LocaleMessages = {
-  required: (field: string) => `The ${field} field is required.`,
-  alphaDash: field => `The ${field} field must only contain letters, digits and underscores.`,
-  alphaDashDot: field => `The ${field} field must only contain letters, digits, underscores and dots.`,
+const en: Locale = {
+  alphaDash: ({ fieldName }) => `The ${fieldName} field must only contain letters, digits, and underscores.`,
+  alphaDashDot: ({ fieldName }) => `The ${fieldName} field must only contain letters, digits, underscores, and dots.`,
+  required: ({ fieldName }) => `The ${fieldName} field is required.`,
 };
 
 export default en;

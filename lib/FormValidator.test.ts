@@ -1,80 +1,129 @@
 import { expect, test } from 'vitest';
+import plugin from '../plugin';
 import FormValidator from './FormValidator';
 
-test('validator with prerequisite rule "required"', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator with "required" rule', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .required()
     .alphaDash();
 
-  // should pass
-  expect(v.validate('hello')).toBe(true);
-  // should fail
-  expect(v.validate(undefined)).toBe('The title field is required.');
-  expect(v.validate('@')).toBe('The title field must only contain letters, digits and underscores.');
+  // Pass cases
+  expect(validator.validate('foo')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate(undefined)).toBe('The input field is required.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('validator without prerequisite rule "required"', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator without "required" rule', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .alphaDash();
 
-  // should pass
-  expect(v.validate(undefined)).toBe(true);
-  expect(v.validate('hello')).toBe(true);
-  // should fail
-  expect(v.validate('@')).toBe('The title field must only contain letters, digits and underscores.');
+  // Pass cases
+  expect(validator.validate(undefined)).toBe(true);
+  expect(validator.validate('foo')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('validator with "when" condition set to true', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator with "when" condition set to true', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .when(true)
     .alphaDash();
 
-  // should pass
-  expect(v.validate(undefined)).toBe(true);
-  expect(v.validate('hello')).toBe(true);
-  // should fail
-  expect(v.validate('@')).toBe('The title field must only contain letters, digits and underscores.');
+  // Pass cases
+  expect(validator.validate(undefined)).toBe(true);
+  expect(validator.validate('foo')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('validator with "when" condition set to false', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator with "when" condition set to false', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .when(false)
     .alphaDash();
 
-  // should pass
-  expect(v.validate(undefined)).toBe(true);
-  expect(v.validate('hello')).toBe(true);
-  expect(v.validate('@')).toBe(true);
+  // Pass cases
+  expect(validator.validate(undefined)).toBe(true);
+  expect(validator.validate('foo')).toBe(true);
+  expect(validator.validate('@')).toBe(true);
 });
 
-test('validator with "when" condition object enabling specific rule', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator with "when" condition enabling a specific rule', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .when({ alphaDash: true })
     .required()
     .alphaDash();
 
-  // should pass
-  expect(v.validate('hello')).toBe(true);
-  // should fail
-  expect(v.validate(undefined)).toBe('The title field is required.');
-  expect(v.validate('@')).toBe('The title field must only contain letters, digits and underscores.');
+  // Pass cases
+  expect(validator.validate('foo')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate(undefined)).toBe('The input field is required.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
 });
 
-test('validator with "when" condition object disabling specific rule', () => {
-  const v = new FormValidator()
-    .defineField('title')
+test('FormValidator with "when" condition disabling a specific rule', () => {
+  const validator = new FormValidator()
+    .defineField('input')
     .when({ alphaDash: false })
     .required()
     .alphaDash();
 
-  // should pass
-  expect(v.validate('hello')).toBe(true);
-  expect(v.validate('@')).toBe(true);
-  // should fail
-  expect(v.validate(undefined)).toBe('The title field is required.');
+  // Pass cases
+  expect(validator.validate('foo')).toBe(true);
+  expect(validator.validate('@')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate(undefined)).toBe('The input field is required.');
+});
+
+test('FormValidator with plugin and "required" rule', () => {
+  const validator = new FormValidator()
+    .registerPlugin(plugin)
+    .defineField('input')
+    .required()
+    .use('json');
+
+  // Pass cases
+  expect(validator.validate('{"foo":"bar"}')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate(undefined)).toBe('The input field is required.');
+  expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
+});
+
+test('FormValidator with plugin without "required" rule', () => {
+  const validator = new FormValidator()
+    .registerPlugin(plugin)
+    .defineField('input')
+    .use('json');
+
+  // Pass cases
+  expect(validator.validate(undefined)).toBe(true);
+  expect(validator.validate('{"foo":"bar"}')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
+});
+
+test('FormValidator with plugin without "required" rule', () => {
+  const validator = new FormValidator()
+    .registerPlugin(plugin)
+    .defineField('input')
+    .use('json');
+
+  // Pass cases
+  expect(validator.validate(undefined)).toBe(true);
+  expect(validator.validate('{"foo":"bar"}')).toBe(true);
+
+  // Fail cases
+  expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
 });

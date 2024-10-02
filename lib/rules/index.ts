@@ -1,11 +1,9 @@
-import { Rule } from '~/types';
+import { Rules } from '~/types';
 import alphaDash from './alphaDash';
 import alphaDashDot from './alphaDashDot';
 import required from './required';
 
-const locales: {
-  [key: string]: Rule;
-} = {
+const locales: Rules = {
   required,
   alphaDash,
   alphaDashDot,
