@@ -1,36 +1,32 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { FormValidator } from '../dist';
 
-const form = ref();
-
 const validator = new FormValidator();
-
-const rules = computed(() => {
-  return validator
-    .defineField('Title')
-    .required()
-    .getMessageRules();
-})
 </script>
 
 <template>
-  <div>
-    <v-app>
-      <v-container>
-        <v-form ref="form">
-          <v-text-field
-            variant="outlined"
-            label="Title"
-            :rules="rules"
-          />
-        </v-form>
-        <div class="d-flex justify-end">
-          <v-btn variant="outlined" @click="form.validate()">
-            Submit
-          </v-btn>
-        </div>
-      </v-container>
-    </v-app>
-  </div>
+  <v-app>
+    <v-container class="fill-height d-flex justify-center">
+      <v-card :min-width="600">
+        <v-card-title class="pa-5">
+          Formulate
+        </v-card-title>
+        <v-card-text class="pa-5 pt-0">
+          <v-form>
+            <v-text-field
+              label="Input"
+              variant="outlined"
+              :rules="(
+                validator
+                  .defineField('Input')
+                  .required()
+                  .alphaDash()
+                  .getMessageRules()
+              )"
+            />
+          </v-form>
+        </v-card-text>
+      </v-card>
+    </v-container>
+  </v-app>
 </template>

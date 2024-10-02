@@ -6,15 +6,22 @@ import dts from 'vite-plugin-dts';
 export default defineConfig({
   plugins: [
     vue(),
-    dts({ include: ['lib'] }),
+    dts({
+      include: [
+        'lib',
+      ],
+      exclude: [
+        '**/*.test.ts',
+      ],
+    }),
   ],
   build: {
+    copyPublicDir: false,
     lib: {
       entry: path.resolve(__dirname, 'lib/index.ts'),
       name: 'Formulate',
       fileName: (format) => format === 'es' ? 'index.js' : `index.${format}.js`,
     },
-    copyPublicDir: false,
   },
   resolve: {
     alias: {

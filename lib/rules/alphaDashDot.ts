@@ -1,5 +1,5 @@
 import { Rule } from '~/types';
-import { isEmpty } from '../utils';
+import { isEmpty } from '~/utils';
 
 const alphaDashDot: Rule = () => (v: unknown) => {
   if (isEmpty(v)) return false;
