@@ -7,6 +7,7 @@ class FieldValidator {
   fieldName: string;
   locale: string;
   messageRules: MessageRule[] = [];
+  condition: { [key: string]: boolean } = {};
   shouldSkip: boolean = false;
 
   constructor(fieldName: string, locale: string) {
@@ -44,12 +45,17 @@ class FieldValidator {
   }
 
   pushMessageRule(name: string, args?: object) {
+    if (name in this.condition && !this.condition[name]) return this;
     const messageRule = this.buildMessageRule(name, args);
     this.messageRules.push(messageRule);
     return this;
   }
 
-  when(condition: boolean) {
+  when(condition: boolean | { [key: string]: boolean }) {
+    if (typeof condition === 'object') {
+      this.condition = condition;
+      return this;
+    }
     if (!condition) {
       this.shouldSkip = true;
     }
@@ -58,6 +64,14 @@ class FieldValidator {
 
   required() {
     return this.pushMessageRule('required');
+  }
+
+  alphaDash() {
+    return this.pushMessageRule('alphaDash');
+  }
+
+  alphaDashDot() {
+    return this.pushMessageRule('alphaDashDot');
   }
 }
 
