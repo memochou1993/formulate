@@ -1,6 +1,6 @@
-import { LocaleMessages } from '~/types';
+import { Messages } from '~/types';
 
-const en: LocaleMessages = {
+const en: Messages = {
   json: (field) => `The ${field} field must be a valid JSON string.`,
 };
 

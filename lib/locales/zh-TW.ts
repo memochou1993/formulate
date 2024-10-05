@@ -1,7 +1,7 @@
-import { LocaleMessages } from '~/types';
+import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
 
-const zhTW: LocaleMessages = {
+const zhTW: Messages = {
   alphaDash: () => '此欄位只能包含字母、數字和底線',
   alphaDashDot: () => '此欄位只能包含字母、數字、底線和點',
   max: (_, { value }) => `此欄位不能大於 ${formatNumber(value as number)}`,

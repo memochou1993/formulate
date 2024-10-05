@@ -1,7 +1,7 @@
-import { LocaleMessages } from '~/types';
+import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
 
-const en: LocaleMessages = {
+const en: Messages = {
   alphaDash: (field) => `The ${field} field must only contain letters, numbers, dashes and underscores.`,
   alphaDashDot: (field) => `The ${field} field must only contain letters, numbers, dashes, underscores and dots.`,
   max: (field, { value }) => `The ${field} field must not be greater than ${formatNumber(value as number)}.`,

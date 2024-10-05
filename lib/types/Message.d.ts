@@ -1,7 +1,7 @@
 import RuleArguments from './RuleArguments';
 
-interface LocaleMessage {
+interface Message {
   (field: string, args: RuleArguments): string;
 }
 
-export default LocaleMessage;
+export default Message;

@@ -21,17 +21,17 @@ class FormValidator {
     this.initializeLocale(defaultLocale, fallbackLocale);
   }
 
-  private initializeLocale(defaultLocale?: string, fallbackLocale?: string) {
+  private initializeLocale(defaultLocale?: string, fallbackLocale?: string): void {
     const { language } = window.navigator;
     this.locale = defaultLocale || (language in this.locales ? language : (fallbackLocale || this.locale));
   }
 
-  public setLocale(locale: string) {
+  public setLocale(locale: string): this {
     this.locale = locale;
     return this;
   }
 
-  public defineField(name: string) {
+  public defineField(name: string): FieldValidator {
     return new FieldValidator({
       name, 
       locale: this.locale,
@@ -40,17 +40,17 @@ class FormValidator {
     });
   }
 
-  public registerLocales(locales: Locales) {
+  public registerLocales(locales: Locales): this {
     this.locales = Object.keys(defaultLocales).reduce((acc, key) => ({ ...acc, [key]: { ...defaultLocales[key], ...(locales[key] || {}) } }), {});
     return this;
   }
 
-  public registerRules(rules: Rules) {
+  public registerRules(rules: Rules): this {
     this.rules = { ...defaultRules, ...rules };
     return this;
   }
 
-  public registerPlugin(plugin: Plugin) {
+  public registerPlugin(plugin: Plugin): this {
     if (!plugin || !plugin.locales || !plugin.rules) {
       throw new Error('The plugin must have "locales" and "rules" properties.');
     }
