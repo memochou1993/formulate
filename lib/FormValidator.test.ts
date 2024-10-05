@@ -29,7 +29,7 @@ test('FormValidator should work with "required" rule', () => {
 
   // Fail cases
   expect(validator.validate(undefined)).toBe('The input field is required.');
-  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
 });
 
 test('FormValidator should work without "required" rule', () => {
@@ -42,7 +42,7 @@ test('FormValidator should work without "required" rule', () => {
   expect(validator.validate('foo')).toBe(true);
 
   // Fail cases
-  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
 });
 
 test('FormValidator should work with "when" condition set to true', () => {
@@ -56,7 +56,7 @@ test('FormValidator should work with "when" condition set to true', () => {
   expect(validator.validate('foo')).toBe(true);
 
   // Fail cases
-  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
 });
 
 test('FormValidator should work with "when" condition set to false', () => {
@@ -83,7 +83,7 @@ test('FormValidator should work with "when" condition enabling a specific rule',
 
   // Fail cases
   expect(validator.validate(undefined)).toBe('The input field is required.');
-  expect(validator.validate('@')).toBe('The input field must only contain letters, digits, and underscores.');
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
 });
 
 test('FormValidator should work with "when" condition disabling a specific rule', () => {
@@ -142,4 +142,40 @@ test('FormValidator should work with plugin without "required" rule', () => {
 
   // Fail cases
   expect(validator.validate('{"foo":"bar"')).toBe('The input field must be a valid JSON string.');
+});
+
+test('FormValidator should work with "alphaDash" rule', () => {
+  const validator = new FormValidator()
+    .defineField('Input')
+    .alphaDash();
+
+  // Fail cases
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
+});
+
+test('FormValidator should work with "alphaDashDot" rule', () => {
+  const validator = new FormValidator()
+    .defineField('Input')
+    .alphaDashDot();
+
+  // Fail cases
+  expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes, underscores and dots.');
+});
+
+test('FormValidator should work with "max" rule', () => {
+  const validator = new FormValidator()
+    .defineField('Input')
+    .max(10);
+
+  // Fail cases
+  expect(validator.validate(11)).toBe('The input field must not be greater than 10.');
+});
+
+test('FormValidator should work with "min" rule', () => {
+  const validator = new FormValidator()
+    .defineField('Input')
+    .min(10);
+
+  // Fail cases
+  expect(validator.validate(9)).toBe('The input field must be at least 10.');
 });

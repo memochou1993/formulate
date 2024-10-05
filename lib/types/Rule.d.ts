@@ -1,5 +1,5 @@
 interface Rule {
-  (args?: object): (value: unknown) => boolean;
+  (args?: unknown): (value: unknown) => boolean;
 }
 
 export default Rule;

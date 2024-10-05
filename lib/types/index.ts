@@ -8,6 +8,7 @@ import MessageRule from './MessageRule';
 import MessageRuleArguments from './MessageRuleArguments';
 import Plugin from './Plugin';
 import Rule from './Rule';
+import RuleArguments from './RuleArguments';
 import Rules from './Rules';
 
 export type {
@@ -21,5 +22,6 @@ export type {
   MessageRuleArguments,
   Plugin,
   Rule,
+  RuleArguments,
   Rules,
 };

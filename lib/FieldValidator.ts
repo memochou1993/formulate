@@ -1,4 +1,4 @@
-import { Condition, FieldValidatorArguments, Locales, MessageRule, MessageRuleArguments, Rules } from './types';
+import { Condition, FieldValidatorArguments, Locales, MessageRule, MessageRuleArguments, RuleArguments, Rules } from './types';
 import { isEmpty } from './utils';
 
 class FieldValidator {
@@ -50,7 +50,7 @@ class FieldValidator {
     return this.shouldSkip ? [] : this.messageRules;
   }
 
-  apply(ruleName: string, args?: MessageRuleArguments) {
+  apply(ruleName: string, args?: RuleArguments) {
     return this.pushMessageRule(ruleName, {
       ...args,
       fieldName: this.name.toLowerCase(),
@@ -85,6 +85,10 @@ class FieldValidator {
     return this;
   }
 
+  required() {
+    return this.apply(this.required.name);
+  }
+
   when(condition: boolean | { [key: string]: boolean }) {
     if (typeof condition === 'object') {
       this.condition = condition;
@@ -104,8 +108,16 @@ class FieldValidator {
     return this.apply(this.alphaDashDot.name);
   }
 
-  required() {
-    return this.apply(this.required.name);
+  max(value: number) {
+    return this.apply(this.max.name, {
+      value,
+    });
+  }
+
+  min(value: number) {
+    return this.apply(this.min.name, {
+      value,
+    });
   }
 }
 

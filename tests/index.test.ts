@@ -13,5 +13,5 @@ test('Input should trigger validation error', async ({ page }) => {
   await page.fill('input', '@');
 
   expect(await page.locator('.v-messages__message').textContent())
-    .toBe('The input field must only contain letters, digits, and underscores.');
+    .toBe('The input field must only contain letters, numbers, dashes and underscores.');
 });

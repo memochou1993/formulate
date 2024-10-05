@@ -5,6 +5,7 @@ test('Rule "alphaDashDot" should pass with valid input', () => {
   const validate = alphaDashDot();
 
   expect(validate('foo')).toBe(true);
+  expect(validate('-')).toBe(true);
   expect(validate('.')).toBe(true);
 });
 
