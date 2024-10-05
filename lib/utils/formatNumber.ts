@@ -1,8 +1,8 @@
-const formatNumber = (number: number, decimalPlaces: number = 0) => {
+const formatNumber = (value: number, decimalPlaces: number = 0) => {
   return new Intl.NumberFormat(undefined, {
     minimumFractionDigits: decimalPlaces,
     maximumFractionDigits: decimalPlaces,
-  }).format(number);
+  }).format(value);
 };
 
 export default formatNumber;

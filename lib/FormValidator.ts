@@ -4,11 +4,11 @@ import defaultRules from './rules';
 import { FormValidatorArguments, Locales, Plugin, Rules } from './types';
 
 class FormValidator {
-  locale: string = 'en';
+  private locale: string = 'en';
 
-  locales: Locales = {};
+  private locales: Locales = {};
 
-  rules: Rules = {};
+  private rules: Rules = {};
 
   constructor({
     customLocales = {},
@@ -21,17 +21,17 @@ class FormValidator {
     this.initializeLocale(defaultLocale, fallbackLocale);
   }
 
-  initializeLocale(defaultLocale?: string, fallbackLocale?: string) {
+  private initializeLocale(defaultLocale?: string, fallbackLocale?: string) {
     const { language } = window.navigator;
     this.locale = defaultLocale || (language in this.locales ? language : (fallbackLocale || this.locale));
   }
 
-  setLocale(locale: string) {
+  public setLocale(locale: string) {
     this.locale = locale;
     return this;
   }
 
-  defineField(name: string) {
+  public defineField(name: string) {
     return new FieldValidator({
       name, 
       locale: this.locale,
@@ -40,23 +40,23 @@ class FormValidator {
     });
   }
 
-  registerPlugin(plugin: Plugin) {
+  public registerLocales(locales: Locales) {
+    this.locales = Object.keys(defaultLocales).reduce((acc, key) => ({ ...acc, [key]: { ...defaultLocales[key], ...(locales[key] || {}) } }), {});
+    return this;
+  }
+
+  public registerRules(rules: Rules) {
+    this.rules = { ...defaultRules, ...rules };
+    return this;
+  }
+
+  public registerPlugin(plugin: Plugin) {
     if (!plugin || !plugin.locales || !plugin.rules) {
       throw new Error('The plugin must have "locales" and "rules" properties.');
     }
     return this
       .registerLocales(plugin.locales)
       .registerRules(plugin.rules);
-  }
-
-  registerLocales(locales: Locales) {
-    this.locales = Object.keys(defaultLocales).reduce((acc, key) => ({ ...acc, [key]: { ...defaultLocales[key], ...(locales[key] || {}) } }), {});
-    return this;
-  }
-
-  registerRules(rules: Rules) {
-    this.rules = { ...defaultRules, ...rules };
-    return this;
   }
 }
 

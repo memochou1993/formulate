@@ -1,25 +1,23 @@
-import Condition from './Condition';
+import Conditions from './Conditions';
 import FieldValidatorArguments from './FieldValidatorArguments';
 import FormValidatorArguments from './FormValidatorArguments';
-import Locale from './Locale';
 import LocaleMessage from './LocaleMessage';
+import LocaleMessages from './LocaleMessages';
 import Locales from './Locales';
 import MessageRule from './MessageRule';
-import MessageRuleArguments from './MessageRuleArguments';
 import Plugin from './Plugin';
 import Rule from './Rule';
 import RuleArguments from './RuleArguments';
 import Rules from './Rules';
 
 export type {
-  Condition,
+  Conditions,
   FieldValidatorArguments,
   FormValidatorArguments,
-  Locale,
   LocaleMessage,
+  LocaleMessages,
   Locales,
   MessageRule,
-  MessageRuleArguments,
   Plugin,
   Rule,
   RuleArguments,

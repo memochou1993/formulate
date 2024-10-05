@@ -1,9 +1,7 @@
-import MessageRuleArguments from './MessageRuleArguments';
+import RuleArguments from './RuleArguments';
 
 interface LocaleMessage {
-  // FIXME:
-  // (fieldName: string, args: MessageRuleArguments): string;
-  (args: MessageRuleArguments): string;
+  (field: string, args: RuleArguments): string;
 }
 
 export default LocaleMessage;

@@ -1,7 +1,7 @@
-import Locale from './Locale';
+import LocaleMessages from './LocaleMessages';
 
 interface Locales {
-  [key: string]: Locale;
+  [key: string]: LocaleMessages;
 }
 
 export default Locales;

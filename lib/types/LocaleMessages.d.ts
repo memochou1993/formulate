@@ -1,7 +1,7 @@
 import LocaleMessage from './LocaleMessage';
 
-interface Locale {
+interface LocaleMessages {
   [key: string]: LocaleMessage;
 }
 
-export default Locale;
+export default LocaleMessages;

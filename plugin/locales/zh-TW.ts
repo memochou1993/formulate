@@ -1,6 +1,6 @@
-import { Locale } from '~/types';
+import { LocaleMessages } from '~/types';
 
-const zhTW: Locale = {
+const zhTW: LocaleMessages = {
   json: () => '此欄位必須是有效的 JSON 字串',
 };
 
