@@ -1,6 +1,7 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
+  testDir: 'tests/integration',
   webServer: {
     command: 'npm run build && npm run dev',
     port: 5173,
@@ -9,9 +10,6 @@ const config: PlaywrightTestConfig = {
   use: {
     baseURL: 'http://localhost:5173',
   },
-  testDir: 'tests',
-  testMatch: /(.+\.)?(test|spec)\.[jt]s/,
-  timeout: 30000,
 };
 
 export default config;

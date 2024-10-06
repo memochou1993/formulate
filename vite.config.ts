@@ -4,17 +4,6 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    dts({
-      include: [
-        'lib',
-      ],
-      exclude: [
-        '**/*.test.ts',
-      ],
-    }),
-  ],
   build: {
     copyPublicDir: false,
     lib: {
@@ -28,4 +17,11 @@ export default defineConfig({
       '~': path.resolve(__dirname, 'lib'),
     },
   },
+  plugins: [
+    vue(),
+    dts({
+      tsconfigPath: './tsconfig.build.json',
+      copyDtsFiles: true,
+    }),
+  ],
 });
