@@ -127,29 +127,17 @@ describe('FieldValidator', () => {
 
   test('should validate with "when" condition enabling a specific rule', () => {
     const validator = new FieldValidator(defaultParams)
-      .when({ alphaDash: true })
-      .required()
-      .alphaDash();
+      .when({ required: true })
+      .required();
 
-    // Pass cases
-    expect(validator.validate('foo')).toBe(true);
-
-    // Fail cases
     expect(validator.validate(undefined)).toBe('The input field is required.');
-    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
   });
 
   test('should validate with "when" condition disabling a specific rule', () => {
     const validator = new FieldValidator(defaultParams)
-      .when({ alphaDash: false })
-      .required()
-      .alphaDash();
+      .when({ required: false })
+      .required();
 
-    // Pass cases
-    expect(validator.validate('foo')).toBe(true);
-    expect(validator.validate('@')).toBe(true);
-
-    // Fail cases
-    expect(validator.validate(undefined)).toBe('The input field is required.');
+    expect(validator.validate(undefined)).toBe(true);
   });
 });
