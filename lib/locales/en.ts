@@ -1,7 +1,9 @@
 import { BetweenRuleArguments } from '~/rules/between';
-import { EndsWitchRuleArguments } from '~/rules/endsWith';
+import { EndsWithRuleArguments } from '~/rules/endsWith';
+import { InRuleArguments } from '~/rules/in';
 import { MaxRuleArguments } from '~/rules/max';
 import { MinRuleArguments } from '~/rules/min';
+import { NotInRuleArguments } from '~/rules/notIn';
 import { StartsWitchRuleArguments } from '~/rules/startsWith';
 import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
@@ -16,10 +18,13 @@ const en: Messages = {
     string: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} characters.`,
   }),
   email: (field) => `The ${field} field must be a valid email address.`,
-  endsWith: (field, { values }: EndsWitchRuleArguments) => {
+  endsWith: (field, { values }: EndsWithRuleArguments) => {
     return typeof values === 'string'
-      ?`The ${field} field must end with ${values}.`
-      :`The ${field} field must end with one of the following: ${values.join(', ')}.`;
+      ? `The ${field} field must end with ${values}.`
+      : `The ${field} field must end with one of the following: ${values.join(', ')}.`;
+  },
+  in: (field, { values }: InRuleArguments) => {
+    return `The ${field} field must be one of the following: ${values.join(', ')}.`;
   },
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
@@ -33,11 +38,12 @@ const en: Messages = {
     number: `The ${field} field must be at least ${formatNumber(min)}.`,
     string: `The ${field} field must be at least ${formatNumber(min)} characters.`,
   }),
+  notIn: (field, { values }: NotInRuleArguments) => `The ${field} field must not be one of the following: ${values.join(', ')}.`,
   required: (field) => `The ${field} field is required.`,
   startsWith: (field, { values }: StartsWitchRuleArguments) => {
     return typeof values === 'string'
-      ?`The ${field} field must start with ${values}.`
-      :`The ${field} field must start with one of the following: ${values.join(', ')}.`;
+      ? `The ${field} field must start with ${values}.`
+      : `The ${field} field must start with one of the following: ${values.join(', ')}.`;
   },
 };
 

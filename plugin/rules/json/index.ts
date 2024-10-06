@@ -1,9 +1,9 @@
 import { isEmpty } from '~/utils';
 
-const json = () => (v: unknown) => {
-  if (isEmpty(v)) return false;
+const json = () => (input: unknown) => {
+  if (isEmpty(input)) return false;
   try {
-    JSON.parse(v as string);
+    JSON.parse(String(input));
     return true;
   } catch {
     return false;

@@ -1,9 +1,9 @@
 import { Rule } from '~/types';
 import { isEmpty } from '~/utils';
 
-const alphaDash: Rule = () => (v: unknown) => {
-  if (isEmpty(v)) return false;
-  return /^[a-zA-Z0-9-_]+$/.test(String(v));
+const alphaDash: Rule = () => (input: unknown) => {
+  if (isEmpty(input)) return false;
+  return /^[a-zA-Z0-9-_]+$/.test(String(input));
 };
 
 export default alphaDash;

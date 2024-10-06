@@ -1,7 +1,9 @@
 import { BetweenRuleArguments } from '~/rules/between';
-import { EndsWitchRuleArguments } from '~/rules/endsWith';
+import { EndsWithRuleArguments } from '~/rules/endsWith';
+import { InRuleArguments } from '~/rules/in';
 import { MaxRuleArguments } from '~/rules/max';
 import { MinRuleArguments } from '~/rules/min';
+import { NotInRuleArguments } from '~/rules/notIn';
 import { StartsWitchRuleArguments } from '~/rules/startsWith';
 import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
@@ -16,11 +18,12 @@ const zhTW: Messages = {
     string: `此欄位必須介於${formatNumber(min)}到${formatNumber(max)}個字元之間`,
   }),
   email: () => '此欄位必須是有效的電子郵件地址',
-  endsWith: (_, { values }: EndsWitchRuleArguments) => {
+  endsWith: (_, { values }: EndsWithRuleArguments) => {
     return typeof values === 'string'
       ? `此欄位必須以${values}結尾`
       : `此欄位必須以以下之一結尾：${values.join(', ')}`;
   },
+  in: (_, { values }: InRuleArguments) => `此欄位必須是以下之一：${values.join(', ')}`,
   max: (_, { max }: MaxRuleArguments) => ({
     array: `此欄位不能大於${formatNumber(max)}個項目`,
     file: `此欄位不能大於${formatNumber(max)}KB`,
@@ -33,6 +36,7 @@ const zhTW: Messages = {
     number: `此欄位不能小於${formatNumber(min)}`,
     string: `此欄位不能小於${formatNumber(min)}個字元`,
   }),
+  notIn: (_, { values }: NotInRuleArguments) => `此欄位不能是以下之一：${values.join(', ')}`,
   required: () => '此欄位為必填',
   startsWith: (_, { values }: StartsWitchRuleArguments) => {
     return typeof values === 'string'

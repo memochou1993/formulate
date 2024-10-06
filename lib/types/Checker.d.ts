@@ -1,5 +1,5 @@
 interface Checker {
-  (value: unknown): boolean | string;
+  (input: unknown): boolean | string;
 }
 
 export default Checker;

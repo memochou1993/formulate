@@ -1,7 +1,7 @@
 import RuleArguments from './RuleArguments';
 
 interface Rule {
-  (args?: RuleArguments): (value: unknown) => boolean;
+  (args?: RuleArguments): (input: unknown) => boolean;
 }
 
 export default Rule;

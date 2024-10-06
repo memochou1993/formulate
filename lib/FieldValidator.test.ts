@@ -94,6 +94,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('_')).toBe('The input field must end with one of the following: foo, bar.');
   });
 
+  test('should validate with "in" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .in(['foo', 'bar']);
+
+    expect(validator.validate('_')).toBe('The input field must be one of the following: foo, bar.');
+  });
+
   test('should validate with "max" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .max(10);
@@ -112,6 +119,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('_'.repeat(9))).toBe('The input field must be at least 10 characters.');
     expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be at least 10 items.');
     expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be at least 10 kilobytes.');
+  });
+
+  test('should validate with "notIn" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .notIn(['foo', 'bar']);
+
+    expect(validator.validate('foo')).toBe('The input field must not be one of the following: foo, bar.');
   });
 
   test('should validate with "required" rule', () => {

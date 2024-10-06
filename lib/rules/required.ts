@@ -1,8 +1,8 @@
 import { Rule } from '~/types';
 import { isEmpty } from '~/utils';
 
-const required: Rule = () => (v: unknown) => {
-  return !isEmpty(v);
+const required: Rule = () => (input: unknown) => {
+  return !isEmpty(input);
 };
 
 export default required;

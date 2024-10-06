@@ -5,16 +5,16 @@ export interface MaxRuleArguments extends RuleArguments {
   max: number;
 }
 
-const min = ({ max }: MaxRuleArguments) => (v: unknown) => {
-  if (isEmpty(v)) return false;
-  if (typeof v === 'number') {
-    return v <= max;
+const min = ({ max }: MaxRuleArguments) => (input: unknown) => {
+  if (isEmpty(input)) return false;
+  if (typeof input === 'number') {
+    return input <= max;
   }
-  if (typeof v === 'string' || Array.isArray(v)) {
-    return v.length <= max;
+  if (typeof input === 'string' || Array.isArray(input)) {
+    return input.length <= max;
   }
-  if (v instanceof File) {
-    return v.size <= max * 1024;
+  if (input instanceof File) {
+    return input.size <= max * 1024;
   } 
   return false;
 };

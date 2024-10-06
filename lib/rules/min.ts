@@ -5,16 +5,16 @@ export interface MinRuleArguments extends RuleArguments {
   min: number;
 }
 
-const min = ({ min }: MinRuleArguments) => (v: unknown) => {
-  if (isEmpty(v)) return false;
-  if (typeof v === 'number') {
-    return v >= min;
+const min = ({ min }: MinRuleArguments) => (input: unknown) => {
+  if (isEmpty(input)) return false;
+  if (typeof input === 'number') {
+    return input >= min;
   }
-  if (typeof v === 'string' || Array.isArray(v)) {
-    return v.length >= min;
+  if (typeof input === 'string' || Array.isArray(input)) {
+    return input.length >= min;
   }
-  if (v instanceof File) {
-    return v.size >= min * 1024;
+  if (input instanceof File) {
+    return input.size >= min * 1024;
   }
   return false;
 };

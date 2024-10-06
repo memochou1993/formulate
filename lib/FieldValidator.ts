@@ -31,15 +31,15 @@ class FieldValidator {
   private buildChecker(ruleName: string, args: RuleArguments): Checker {
     const rule = this.getRule(ruleName)(args);
     const message = this.getMessage(ruleName)(this.name.toLowerCase(), args);
-    return (value: unknown) => {
-      if (ruleName !== this.required.name && isEmpty(value)) return true;
-      if (rule(value)) return true;
+    return (input: unknown) => {
+      if (ruleName !== this.required.name && isEmpty(input)) return true;
+      if (rule(input)) return true;
       if (typeof message === 'object') {
-        const valueType =  Object.prototype.toString.call(value).toLowerCase().slice(8, -1);
-        if (!(valueType in message)) {
-          throw new Error(`The message for the "${ruleName}" rule of the "${valueType}" type is missing.`);
+        const inputType =  Object.prototype.toString.call(input).toLowerCase().slice(8, -1);
+        if (!(inputType in message)) {
+          throw new Error(`The message for the "${ruleName}" rule of the "${inputType}" type is missing.`);
         }
-        return formatString(message[valueType]);
+        return formatString(message[inputType]);
       }
       return formatString(message);
     };
@@ -112,12 +112,20 @@ class FieldValidator {
     return this.apply(this.endsWith.name, { values });
   }
 
+  public in(values: string[]): this {
+    return this.apply(this.in.name, { values });
+  }
+
   public max(value: number): this {
     return this.apply(this.max.name, { max: value });
   }
 
   public min(value: number): this {
     return this.apply(this.min.name, { min: value });
+  }
+
+  public notIn(values: string[]): this {
+    return this.apply(this.notIn.name, { values });
   }
 
   public required(): this {
