@@ -73,6 +73,13 @@ describe('FieldValidator', () => {
     expect(validator.validate(new File(['_'.repeat(21 * 1024)], ''))).toBe('The input field must be between 10 and 20 kilobytes.');
   });
 
+  test('should validate with "email" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .email();
+
+    expect(validator.validate('foo')).toBe('The input field must be a valid email address.');
+  });
+
   test('should validate with "max" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .max(10);

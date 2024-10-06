@@ -104,6 +104,10 @@ class FieldValidator {
     return this.apply(this.between.name, { min, max });
   }
 
+  public email(): this {
+    return this.apply(this.email.name);
+  }
+
   public max(value: number): this {
     return this.apply(this.max.name, { max: value });
   }

@@ -13,6 +13,7 @@ const zhTW: Messages = {
     number: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)}`,
     string: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)} 個字元之間`,
   }),
+  email: () => '此欄位必須是有效的電子郵件地址',
   max: (_, { max }: MaxRuleArguments) => ({
     array: `此欄位不能大於 ${formatNumber(max)} 個項目`,
     file: `此欄位不能大於 ${formatNumber(max)} KB`,

@@ -13,6 +13,7 @@ const en: Messages = {
     number: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)}.`,
     string: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} characters.`,
   }),
+  email: (field) => `The ${field} field must be a valid email address.`,
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
     file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,
