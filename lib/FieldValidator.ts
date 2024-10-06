@@ -116,11 +116,11 @@ class FieldValidator {
   }
 
   public max(value: number): this {
-    return this.apply(this.max.name, { value });
+    return this.apply(this.max.name, { max: value });
   }
 
   public min(value: number): this {
-    return this.apply(this.min.name, { value });
+    return this.apply(this.min.name, { min: value });
   }
 }
 

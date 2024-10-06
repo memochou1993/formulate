@@ -6,17 +6,17 @@ import { formatNumber } from '~/utils';
 const zhTW: Messages = {
   alphaDash: () => '此欄位只能包含字母、數字和底線',
   alphaDashDot: () => '此欄位只能包含字母、數字、底線和點',
-  max: (_, { value }: MaxRuleArguments) => ({
-    array: `此欄位不能大於 ${formatNumber(value)} 個項目`,
-    file: `此欄位不能大於 ${formatNumber(value)} KB`,
-    number: `此欄位不能大於 ${formatNumber(value)}`,
-    string: `此欄位不能大於 ${formatNumber(value)} 個字元`,
+  max: (_, { max }: MaxRuleArguments) => ({
+    array: `此欄位不能大於 ${formatNumber(max)} 個項目`,
+    file: `此欄位不能大於 ${formatNumber(max)} KB`,
+    number: `此欄位不能大於 ${formatNumber(max)}`,
+    string: `此欄位不能大於 ${formatNumber(max)} 個字元`,
   }),
-  min: (_, { value }: MinRuleArguments) => ({
-    array: `此欄位不能小於 ${formatNumber(value)} 個項目`,
-    file: `此欄位不能小於 ${formatNumber(value)} KB`,
-    number: `此欄位不能小於 ${formatNumber(value)}`,
-    string: `此欄位不能小於 ${formatNumber(value)} 個字元`,
+  min: (_, { min }: MinRuleArguments) => ({
+    array: `此欄位不能小於 ${formatNumber(min)} 個項目`,
+    file: `此欄位不能小於 ${formatNumber(min)} KB`,
+    number: `此欄位不能小於 ${formatNumber(min)}`,
+    string: `此欄位不能小於 ${formatNumber(min)} 個字元`,
   }),
   required: () => '此欄位為必填',
 };

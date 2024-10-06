@@ -6,17 +6,17 @@ import { formatNumber } from '~/utils';
 const en: Messages = {
   alphaDash: (field) => `The ${field} field must only contain letters, numbers, dashes and underscores.`,
   alphaDashDot: (field) => `The ${field} field must only contain letters, numbers, dashes, underscores and dots.`,
-  max: (field, { value }: MaxRuleArguments) => ({
-    array: `The ${field} field must not be greater than ${formatNumber(value)} items.`,
-    file: `The ${field} field must not be greater than ${formatNumber(value)} kilobytes.`,
-    number: `The ${field} field must not be greater than ${formatNumber(value)}.`,
-    string: `The ${field} field must not be greater than ${formatNumber(value)} characters.`,
+  max: (field, { max }: MaxRuleArguments) => ({
+    array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
+    file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,
+    number: `The ${field} field must not be greater than ${formatNumber(max)}.`,
+    string: `The ${field} field must not be greater than ${formatNumber(max)} characters.`,
   }),
-  min: (field, { value }: MinRuleArguments) => ({
-    array: `The ${field} field must be at least ${formatNumber(value)} items.`,
-    file: `The ${field} field must be at least ${formatNumber(value)} kilobytes.`,
-    number: `The ${field} field must be at least ${formatNumber(value)}.`,
-    string: `The ${field} field must be at least ${formatNumber(value)} characters.`,
+  min: (field, { min }: MinRuleArguments) => ({
+    array: `The ${field} field must be at least ${formatNumber(min)} items.`,
+    file: `The ${field} field must be at least ${formatNumber(min)} kilobytes.`,
+    number: `The ${field} field must be at least ${formatNumber(min)}.`,
+    string: `The ${field} field must be at least ${formatNumber(min)} characters.`,
   }),
   required: (field) => `The ${field} field is required.`,
 };

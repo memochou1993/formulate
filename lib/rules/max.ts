@@ -2,19 +2,19 @@ import { RuleArguments } from '~/types';
 import { isEmpty } from '../utils';
 
 export interface MaxRuleArguments extends RuleArguments {
-  value: number;
+  max: number;
 }
 
-const min = ({ value }: MaxRuleArguments) => (v: unknown) => {
+const min = ({ max }: MaxRuleArguments) => (v: unknown) => {
   if (isEmpty(v)) return false;
   if (typeof v === 'number') {
-    return v <= value;
+    return v <= max;
   }
   if (typeof v === 'string' || Array.isArray(v)) {
-    return v.length <= value;
+    return v.length <= max;
   }
   if (v instanceof File) {
-    return v.size <= value * 1024;
+    return v.size <= max * 1024;
   } 
   return false;
 };
