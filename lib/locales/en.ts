@@ -1,3 +1,4 @@
+import { BetweenRuleArguments } from '~/rules/between';
 import { MaxRuleArguments } from '~/rules/max';
 import { MinRuleArguments } from '~/rules/min';
 import { Messages } from '~/types';
@@ -6,6 +7,12 @@ import { formatNumber } from '~/utils';
 const en: Messages = {
   alphaDash: (field) => `The ${field} field must only contain letters, numbers, dashes and underscores.`,
   alphaDashDot: (field) => `The ${field} field must only contain letters, numbers, dashes, underscores and dots.`,
+  between: (field, { min, max }: BetweenRuleArguments) => ({
+    array: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} items.`,
+    file: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} kilobytes.`,
+    number: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)}.`,
+    string: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} characters.`,
+  }),
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
     file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,

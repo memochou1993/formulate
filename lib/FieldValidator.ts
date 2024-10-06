@@ -73,17 +73,6 @@ class FieldValidator {
     return this.messages[ruleName];
   }
 
-  public when(conditions: boolean | Conditions): this {
-    if (typeof conditions === 'object') {
-      this.conditions = conditions;
-      return this;
-    }
-    if (!conditions) {
-      this.shouldSkip = true;
-    }
-    return this;
-  }
-
   public validate(value: unknown): boolean | string {
     if (this.shouldSkip) return true;
     for (const checker of this.checkers) {
@@ -103,10 +92,6 @@ class FieldValidator {
     return this.pushChecker(ruleName, args || {});
   }
 
-  public required(): this {
-    return this.apply(this.required.name);
-  }
-
   public alphaDash(): this {
     return this.apply(this.alphaDash.name);
   }
@@ -115,12 +100,31 @@ class FieldValidator {
     return this.apply(this.alphaDashDot.name);
   }
 
+  public between(min: number, max: number): this {
+    return this.apply(this.between.name, { min, max });
+  }
+
   public max(value: number): this {
     return this.apply(this.max.name, { max: value });
   }
 
   public min(value: number): this {
     return this.apply(this.min.name, { min: value });
+  }
+
+  public required(): this {
+    return this.apply(this.required.name);
+  }
+
+  public when(conditions: boolean | Conditions): this {
+    if (typeof conditions === 'object') {
+      this.conditions = conditions;
+      return this;
+    }
+    if (!conditions) {
+      this.shouldSkip = true;
+    }
+    return this;
   }
 }
 

@@ -44,28 +44,61 @@ describe('FieldValidator', () => {
     expect(() => validator.getRule('foo')).toThrowError('The "foo" rule does not exist.');
   });
 
-  test('should validate with "required" and "alphaDash" rules', () => {
+  test('should validate with "alphaDash" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .alphaDash();
+
+    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
+  });
+
+  test('should validate with "alphaDashDot" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .alphaDashDot();
+
+    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes, underscores and dots.');
+  });
+
+  test('should validate with "between" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .between(10, 20);
+
+    expect(validator.validate(9)).toBe('The input field must be between 10 and 20.');
+    expect(validator.validate('_'.repeat(9))).toBe('The input field must be between 10 and 20 characters.');
+    expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be between 10 and 20 items.');
+    expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be between 10 and 20 kilobytes.');
+  
+    expect(validator.validate(21)).toBe('The input field must be between 10 and 20.');
+    expect(validator.validate('_'.repeat(21))).toBe('The input field must be between 10 and 20 characters.');
+    expect(validator.validate(Array.from('_'.repeat(21)))).toBe('The input field must be between 10 and 20 items.');
+    expect(validator.validate(new File(['_'.repeat(21 * 1024)], ''))).toBe('The input field must be between 10 and 20 kilobytes.');
+  });
+
+  test('should validate with "max" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .max(10);
+
+    expect(validator.validate(11)).toBe('The input field must not be greater than 10.');
+    expect(validator.validate('_'.repeat(11))).toBe('The input field must not be greater than 10 characters.');
+    expect(validator.validate(Array.from('_'.repeat(11)))).toBe('The input field must not be greater than 10 items.');
+    expect(validator.validate(new File(['_'.repeat(11 * 1024)], ''))).toBe('The input field must not be greater than 10 kilobytes.');
+  });
+
+  test('should validate with "min" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .min(10);
+
+    expect(validator.validate(9)).toBe('The input field must be at least 10.');
+    expect(validator.validate('_'.repeat(9))).toBe('The input field must be at least 10 characters.');
+    expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be at least 10 items.');
+    expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be at least 10 kilobytes.');
+  });
+
+  test('should validate with "required" rules', () => {
     const validator = new FieldValidator(defaultParams)
       .required()
       .alphaDash();
 
-    // Pass cases
-    expect(validator.validate('foo')).toBe(true);
-
-    // Fail cases
     expect(validator.validate(undefined)).toBe('The input field is required.');
-    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
-  });
-
-  test('should validate without "required" rule with "alphaDash" rule', () => {
-    const validator = new FieldValidator(defaultParams)
-      .alphaDash();
-
-    // Pass cases
-    expect(validator.validate(undefined)).toBe(true);
-    expect(validator.validate('foo')).toBe(true);
-
-    // Fail cases
     expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
   });
 
@@ -118,39 +151,5 @@ describe('FieldValidator', () => {
 
     // Fail cases
     expect(validator.validate(undefined)).toBe('The input field is required.');
-  });
-
-  test('should validate with "alphaDash" rule', () => {
-    const validator = new FieldValidator(defaultParams)
-      .alphaDash();
-
-    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
-  });
-
-  test('should validate with "alphaDashDot" rule', () => {
-    const validator = new FieldValidator(defaultParams)
-      .alphaDashDot();
-
-    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes, underscores and dots.');
-  });
-
-  test('should validate with "max" rule', () => {
-    const validator = new FieldValidator(defaultParams)
-      .max(10);
-
-    expect(validator.validate(11)).toBe('The input field must not be greater than 10.');
-    expect(validator.validate('_'.repeat(11))).toBe('The input field must not be greater than 10 characters.');
-    expect(validator.validate(Array.from('_'.repeat(11)))).toBe('The input field must not be greater than 10 items.');
-    expect(validator.validate(new File(['_'.repeat(11 * 1024)], ''))).toBe('The input field must not be greater than 10 kilobytes.');
-  });
-
-  test('should validate with "min" rule', () => {
-    const validator = new FieldValidator(defaultParams)
-      .min(10);
-
-    expect(validator.validate(9)).toBe('The input field must be at least 10.');
-    expect(validator.validate('_'.repeat(9))).toBe('The input field must be at least 10 characters.');
-    expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be at least 10 items.');
-    expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be at least 10 kilobytes.');
   });
 });

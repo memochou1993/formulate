@@ -17,6 +17,33 @@ describe('FormValidator', () => {
     expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
   });
 
+  test('should validate with "required" rules', () => {
+    const validator = new FormValidator()
+      .defineField('Input')
+      .required()
+      .alphaDash();
+
+    // Pass cases
+    expect(validator.validate('foo')).toBe(true);
+
+    // Fail cases
+    expect(validator.validate(undefined)).toBe('The input field is required.');
+    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
+  });
+
+  test('should validate without "required" rule', () => {
+    const validator = new FormValidator()
+      .defineField('Input')
+      .alphaDash();
+
+    // Pass cases
+    expect(validator.validate(undefined)).toBe(true);
+    expect(validator.validate('foo')).toBe(true);
+
+    // Fail cases
+    expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
+  });
+
   test('should validate with plugin', () => {
     const validator = new FormValidator()
       .registerPlugin(plugin)
