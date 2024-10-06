@@ -7,34 +7,38 @@ import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
 
 const zhTW: Messages = {
-  alphaDash: () => '此欄位只能包含字母、數字和底線',
-  alphaDashDot: () => '此欄位只能包含字母、數字、底線和點',
+  alphaDash: () => '此欄位只能包含字母、數字、連接號和底線',
+  alphaDashDot: () => '此欄位只能包含字母、數字、連接號、底線和點',
   between: (_, { min, max }: BetweenRuleArguments) => ({
-    array: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)} 個項目之間`,
-    file: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)} KB 之間`,
-    number: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)}`,
-    string: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)} 個字元之間`,
+    array: `此欄位必須介於${formatNumber(min)}到${formatNumber(max)}個項目之間`,
+    file: `此欄位必須介於${formatNumber(min)}到${formatNumber(max)}KB 之間`,
+    number: `此欄位必須介於${formatNumber(min)}到${formatNumber(max)}`,
+    string: `此欄位必須介於${formatNumber(min)}到${formatNumber(max)}個字元之間`,
   }),
   email: () => '此欄位必須是有效的電子郵件地址',
-  endsWith: (_, { values }: EndsWitchRuleArguments) => ({
-    string: `此欄位必須以以下之一結尾：${values.join(', ')}`,
-  }),
+  endsWith: (_, { values }: EndsWitchRuleArguments) => {
+    return typeof values === 'string'
+      ? `此欄位必須以${values}結尾`
+      : `此欄位必須以以下之一結尾：${values.join(', ')}`;
+  },
   max: (_, { max }: MaxRuleArguments) => ({
-    array: `此欄位不能大於 ${formatNumber(max)} 個項目`,
-    file: `此欄位不能大於 ${formatNumber(max)} KB`,
-    number: `此欄位不能大於 ${formatNumber(max)}`,
-    string: `此欄位不能大於 ${formatNumber(max)} 個字元`,
+    array: `此欄位不能大於${formatNumber(max)}個項目`,
+    file: `此欄位不能大於${formatNumber(max)}KB`,
+    number: `此欄位不能大於${formatNumber(max)}`,
+    string: `此欄位不能大於${formatNumber(max)}個字元`,
   }),
   min: (_, { min }: MinRuleArguments) => ({
-    array: `此欄位不能小於 ${formatNumber(min)} 個項目`,
-    file: `此欄位不能小於 ${formatNumber(min)} KB`,
-    number: `此欄位不能小於 ${formatNumber(min)}`,
-    string: `此欄位不能小於 ${formatNumber(min)} 個字元`,
+    array: `此欄位不能小於${formatNumber(min)}個項目`,
+    file: `此欄位不能小於${formatNumber(min)}KB`,
+    number: `此欄位不能小於${formatNumber(min)}`,
+    string: `此欄位不能小於${formatNumber(min)}個字元`,
   }),
   required: () => '此欄位為必填',
-  startsWith: (_, { values }: StartsWitchRuleArguments) => ({
-    string: `此欄位必須以以下之一開頭：${values.join(', ')}`,
-  }),
+  startsWith: (_, { values }: StartsWitchRuleArguments) => {
+    return typeof values === 'string'
+      ? `此欄位必須以${values}開頭`
+      : `此欄位必須以以下之一開頭：${values.join(', ')}`;
+  },
 };
 
 export default zhTW;

@@ -16,9 +16,11 @@ const en: Messages = {
     string: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} characters.`,
   }),
   email: (field) => `The ${field} field must be a valid email address.`,
-  endsWith: (field, { values }: EndsWitchRuleArguments) => ({
-    string: `The ${field} field must end with one of the following: ${values}.`,
-  }),
+  endsWith: (field, { values }: EndsWitchRuleArguments) => {
+    return typeof values === 'string'
+      ?`The ${field} field must end with ${values}.`
+      :`The ${field} field must end with one of the following: ${values.join(', ')}.`;
+  },
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
     file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,
@@ -32,10 +34,11 @@ const en: Messages = {
     string: `The ${field} field must be at least ${formatNumber(min)} characters.`,
   }),
   required: (field) => `The ${field} field is required.`,
-  startsWith: (field, { values }: StartsWitchRuleArguments) => ({
-    // FIXME:
-    string: `The ${field} field must start with one of the following: ${values}.`,
-  }),
+  startsWith: (field, { values }: StartsWitchRuleArguments) => {
+    return typeof values === 'string'
+      ?`The ${field} field must start with ${values}.`
+      :`The ${field} field must start with one of the following: ${values.join(', ')}.`;
+  },
 };
 
 export default en;

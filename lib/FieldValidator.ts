@@ -1,5 +1,5 @@
 import { Checker, Conditions, FieldValidatorArguments, Locales, Message, Messages, Rule, RuleArguments, Rules } from './types';
-import { isEmpty } from './utils';
+import { formatString, isEmpty } from './utils';
 
 class FieldValidator {
   private name: string;
@@ -39,9 +39,9 @@ class FieldValidator {
         if (!(valueType in message)) {
           throw new Error(`The message for the "${ruleName}" rule of the "${valueType}" type is missing.`);
         }
-        return message[valueType];
+        return formatString(message[valueType]);
       }
-      return message;
+      return formatString(message);
     };
   }
 
@@ -108,7 +108,7 @@ class FieldValidator {
     return this.apply(this.email.name);
   }
 
-  public endsWith(values: string[]): this {
+  public endsWith(values: string | string[]): this {
     return this.apply(this.endsWith.name, { values });
   }
 
@@ -124,7 +124,7 @@ class FieldValidator {
     return this.apply(this.required.name);
   }
 
-  public startsWith(values: string[]): this {
+  public startsWith(values: string | string[]): this {
     return this.apply(this.startsWith.name, { values });
   }
 

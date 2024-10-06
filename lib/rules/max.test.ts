@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import max from './max';
 
-describe('Rule "alphaDash"', () => {
+describe('Rule "max"', () => {
   const validate = max({ max: 10 });
 
   test('should pass with valid input', () => {

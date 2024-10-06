@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import between from './between';
 
-describe('Rule "alphaDash"', () => {
+describe('Rule "between"', () => {
   const validate = between({ min: 10, max: 20 });
 
   test('should pass with valid input', () => {

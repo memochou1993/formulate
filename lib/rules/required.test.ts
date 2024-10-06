@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import required from './required';
 
-describe('Rule "alphaDash"', () => {
+describe('Rule "required"', () => {
   const validate = required();
 
   test('should pass with valid input', () => {

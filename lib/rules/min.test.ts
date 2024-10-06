@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import min from './min';
 
-describe('Rule "alphaDash"', () => {
+describe('Rule "min"', () => {
   const validate = min({ min: 10 });
 
   test('should pass with valid input', () => {

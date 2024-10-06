@@ -80,11 +80,18 @@ describe('FieldValidator', () => {
     expect(validator.validate('foo')).toBe('The input field must be a valid email address.');
   });
 
-  test('should validate with "endsWith" rules', () => {
+  test('should validate with "endsWith" rule set to a string', () => {
     const validator = new FieldValidator(defaultParams)
-      .endsWith(['foo']);
+      .endsWith('foo');
 
-    expect(validator.validate('_')).toBe('The input field must end with one of the following: foo.');
+    expect(validator.validate('_')).toBe('The input field must end with foo.');
+  });
+
+  test('should validate with "endsWith" rule set to an array', () => {
+    const validator = new FieldValidator(defaultParams)
+      .endsWith(['foo', 'bar']);
+
+    expect(validator.validate('_')).toBe('The input field must end with one of the following: foo, bar.');
   });
 
   test('should validate with "max" rule', () => {
@@ -107,7 +114,7 @@ describe('FieldValidator', () => {
     expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be at least 10 kilobytes.');
   });
 
-  test('should validate with "required" rules', () => {
+  test('should validate with "required" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .required()
       .alphaDash();
@@ -116,11 +123,18 @@ describe('FieldValidator', () => {
     expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
   });
 
-  test('should validate with "startsWith" rules', () => {
+  test('should validate with "startsWith" rule set to a string', () => {
     const validator = new FieldValidator(defaultParams)
-      .startsWith(['foo']);
+      .startsWith('foo');
 
-    expect(validator.validate('_')).toBe('The input field must start with one of the following: foo.');
+    expect(validator.validate('_')).toBe('The input field must start with foo.');
+  });
+
+  test('should validate with "startsWith" rule set to an array', () => {
+    const validator = new FieldValidator(defaultParams)
+      .startsWith(['foo', 'bar']);
+
+    expect(validator.validate('_')).toBe('The input field must start with one of the following: foo, bar.');
   });
 
   test('should validate with "when" condition set to true', () => {

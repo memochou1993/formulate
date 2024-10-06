@@ -17,7 +17,7 @@ describe('FormValidator', () => {
     expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
   });
 
-  test('should validate with "required" rules', () => {
+  test('should validate with "required" rule', () => {
     const validator = new FormValidator()
       .defineField('Input')
       .required()
