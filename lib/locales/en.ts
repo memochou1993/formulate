@@ -7,14 +7,16 @@ const en: Messages = {
   alphaDash: (field) => `The ${field} field must only contain letters, numbers, dashes and underscores.`,
   alphaDashDot: (field) => `The ${field} field must only contain letters, numbers, dashes, underscores and dots.`,
   max: (field, { value }: MaxRuleArguments) => ({
+    array: `The ${field} field must not be greater than ${formatNumber(value)} items.`,
+    file: `The ${field} field must not be greater than ${formatNumber(value)} kilobytes.`,
     number: `The ${field} field must not be greater than ${formatNumber(value)}.`,
-    string: `The ${field} field must not be greater than ${formatNumber(value as number)} characters.`,
-    array: `The ${field} field must not be greater than ${formatNumber(value as number)} items.`,
+    string: `The ${field} field must not be greater than ${formatNumber(value)} characters.`,
   }),
   min: (field, { value }: MinRuleArguments) => ({
-    number: `The ${field} field must be at least ${formatNumber(value as number)}.`,
-    string: `The ${field} field must be at least ${formatNumber(value as number)} characters.`,
-    array: `The ${field} field must be at least ${formatNumber(value as number)} items.`,
+    array: `The ${field} field must be at least ${formatNumber(value)} items.`,
+    file: `The ${field} field must be at least ${formatNumber(value)} kilobytes.`,
+    number: `The ${field} field must be at least ${formatNumber(value)}.`,
+    string: `The ${field} field must be at least ${formatNumber(value)} characters.`,
   }),
   required: (field) => `The ${field} field is required.`,
 };

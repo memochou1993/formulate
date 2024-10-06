@@ -13,6 +13,9 @@ const min = ({ value }: MaxRuleArguments) => (v: unknown) => {
   if (typeof v === 'string' || Array.isArray(v)) {
     return v.length <= value;
   }
+  if (v instanceof File) {
+    return v.size <= value * 1024;
+  } 
   return false;
 };
 

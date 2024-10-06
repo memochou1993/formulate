@@ -34,9 +34,14 @@ class FieldValidator {
     return (value: unknown) => {
       if (ruleName !== this.required.name && isEmpty(value)) return true;
       if (rule(value)) return true;
-      return typeof message === 'object'
-        ? message[Object.prototype.toString.call(value).toLowerCase().slice(8, -1)]
-        : message;
+      if (typeof message === 'object') {
+        const valueType =  Object.prototype.toString.call(value).toLowerCase().slice(8, -1);
+        if (!(valueType in message)) {
+          throw new Error(`The message for the "${ruleName}" rule of the "${valueType}" type is missing.`);
+        }
+        return message[valueType];
+      }
+      return message;
     };
   }
 
@@ -49,21 +54,21 @@ class FieldValidator {
 
   public get messages(): Messages {
     if (!(this.locale in this.locales)) {
-      throw new Error(`The messages for the locale "${this.locale}" are missing.`);
+      throw new Error(`The messages for the "${this.locale}" locale are missing.`);
     }
     return this.locales[this.locale];
   }
 
   public getRule(name: string): Rule {
     if (!(name in this.rules)) {
-      throw new Error(`The rule "${name}" does not exist.`);
+      throw new Error(`The "${name}" rule does not exist.`);
     }
     return this.rules[name];
   }
 
   public getMessage(ruleName: string): Message {
     if (!(ruleName in this.messages)) {
-      throw new Error(`The message for the rule "${ruleName}" is missing.`);
+      throw new Error(`The message for the "${ruleName}" rule is missing.`);
     }
     return this.messages[ruleName];
   }

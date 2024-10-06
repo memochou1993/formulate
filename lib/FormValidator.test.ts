@@ -7,14 +7,14 @@ describe('FormValidator', () => {
     const validator = new FormValidator({ defaultLocale: 'foo' })
       .defineField('Input');
 
-    expect(() => validator.messages).toThrowError('The messages for the locale "foo" are missing.');
+    expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
   });
 
   test('should throw an error for a non-existent fallback locale', () => {
     const validator = new FormValidator({ fallbackLocale: 'foo' })
       .defineField('Input');
 
-    expect(() => validator.messages).toThrowError('The messages for the locale "foo" are missing.');
+    expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
   });
 
   test('should validate with plugin', () => {

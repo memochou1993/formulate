@@ -19,7 +19,7 @@ describe('FieldValidator', () => {
       rules: defaultRules,
     });
 
-    expect(() => validator.getMessage('required')).toThrowError('The messages for the locale "foo" are missing.');
+    expect(() => validator.getMessage('required')).toThrowError('The messages for the "foo" locale are missing.');
   });
 
   test('should throw an error for a non-existent message', () => {
@@ -30,7 +30,7 @@ describe('FieldValidator', () => {
       rules: defaultRules,
     });
 
-    expect(() => validator.getMessage('foo')).toThrowError('The message for the rule "foo" is missing.');
+    expect(() => validator.getMessage('foo')).toThrowError('The message for the "foo" rule is missing.');
   });
 
   test('should throw an error for a non-existent rule', () => {
@@ -41,7 +41,7 @@ describe('FieldValidator', () => {
       rules: defaultRules,
     });
 
-    expect(() => validator.getRule('foo')).toThrowError('The rule "foo" does not exist.');
+    expect(() => validator.getRule('foo')).toThrowError('The "foo" rule does not exist.');
   });
 
   test('should validate with "required" and "alphaDash" rules', () => {
@@ -141,6 +141,7 @@ describe('FieldValidator', () => {
     expect(validator.validate(11)).toBe('The input field must not be greater than 10.');
     expect(validator.validate('_'.repeat(11))).toBe('The input field must not be greater than 10 characters.');
     expect(validator.validate(Array.from('_'.repeat(11)))).toBe('The input field must not be greater than 10 items.');
+    expect(validator.validate(new File(['_'.repeat(11 * 1024)], ''))).toBe('The input field must not be greater than 10 kilobytes.');
   });
 
   test('should validate with "min" rule', () => {
@@ -150,5 +151,6 @@ describe('FieldValidator', () => {
     expect(validator.validate(9)).toBe('The input field must be at least 10.');
     expect(validator.validate('_'.repeat(9))).toBe('The input field must be at least 10 characters.');
     expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be at least 10 items.');
+    expect(validator.validate(new File(['_'.repeat(9 * 1024)], ''))).toBe('The input field must be at least 10 kilobytes.');
   });
 });
