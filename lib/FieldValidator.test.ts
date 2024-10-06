@@ -80,6 +80,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('foo')).toBe('The input field must be a valid email address.');
   });
 
+  test('should validate with "endsWith" rules', () => {
+    const validator = new FieldValidator(defaultParams)
+      .endsWith(['foo']);
+
+    expect(validator.validate('_')).toBe('The input field must end with one of the following: foo.');
+  });
+
   test('should validate with "max" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .max(10);
@@ -107,6 +114,13 @@ describe('FieldValidator', () => {
 
     expect(validator.validate(undefined)).toBe('The input field is required.');
     expect(validator.validate('@')).toBe('The input field must only contain letters, numbers, dashes and underscores.');
+  });
+
+  test('should validate with "startsWith" rules', () => {
+    const validator = new FieldValidator(defaultParams)
+      .startsWith(['foo']);
+
+    expect(validator.validate('_')).toBe('The input field must start with one of the following: foo.');
   });
 
   test('should validate with "when" condition set to true', () => {

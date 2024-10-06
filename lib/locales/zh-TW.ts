@@ -1,6 +1,8 @@
 import { BetweenRuleArguments } from '~/rules/between';
+import { EndsWitchRuleArguments } from '~/rules/endsWith';
 import { MaxRuleArguments } from '~/rules/max';
 import { MinRuleArguments } from '~/rules/min';
+import { StartsWitchRuleArguments } from '~/rules/startsWith';
 import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
 
@@ -14,6 +16,9 @@ const zhTW: Messages = {
     string: `此欄位必須介於 ${formatNumber(min)} 到 ${formatNumber(max)} 個字元之間`,
   }),
   email: () => '此欄位必須是有效的電子郵件地址',
+  endsWith: (_, { values }: EndsWitchRuleArguments) => ({
+    string: `此欄位必須以以下之一結尾：${values.join(', ')}`,
+  }),
   max: (_, { max }: MaxRuleArguments) => ({
     array: `此欄位不能大於 ${formatNumber(max)} 個項目`,
     file: `此欄位不能大於 ${formatNumber(max)} KB`,
@@ -27,6 +32,9 @@ const zhTW: Messages = {
     string: `此欄位不能小於 ${formatNumber(min)} 個字元`,
   }),
   required: () => '此欄位為必填',
+  startsWith: (_, { values }: StartsWitchRuleArguments) => ({
+    string: `此欄位必須以以下之一開頭：${values.join(', ')}`,
+  }),
 };
 
 export default zhTW;

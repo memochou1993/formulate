@@ -2,9 +2,9 @@ import { describe, expect, test } from 'vitest';
 import max from './max';
 
 describe('Rule "alphaDash"', () => {
-  test('should pass with valid input', () => {
-    const validate = max({ max: 10 });
+  const validate = max({ max: 10 });
 
+  test('should pass with valid input', () => {
     expect(validate(10)).toBe(true);
     expect(validate('_'.repeat(10))).toBe(true);
     expect(validate(Array.from('_'.repeat(10)))).toBe(true);
@@ -12,8 +12,6 @@ describe('Rule "alphaDash"', () => {
   });
 
   test('should fail with invalid input', () => {
-    const validate = max({ max: 10 });
-
     expect(validate(undefined)).toBe(false);
     expect(validate(11)).toBe(false);
     expect(validate('_'.repeat(11))).toBe(false);

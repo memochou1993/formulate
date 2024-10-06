@@ -1,6 +1,8 @@
 import { BetweenRuleArguments } from '~/rules/between';
+import { EndsWitchRuleArguments } from '~/rules/endsWith';
 import { MaxRuleArguments } from '~/rules/max';
 import { MinRuleArguments } from '~/rules/min';
+import { StartsWitchRuleArguments } from '~/rules/startsWith';
 import { Messages } from '~/types';
 import { formatNumber } from '~/utils';
 
@@ -14,6 +16,9 @@ const en: Messages = {
     string: `The ${field} field must be between ${formatNumber(min)} and ${formatNumber(max)} characters.`,
   }),
   email: (field) => `The ${field} field must be a valid email address.`,
+  endsWith: (field, { values }: EndsWitchRuleArguments) => ({
+    string: `The ${field} field must end with one of the following: ${values}.`,
+  }),
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
     file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,
@@ -27,6 +32,10 @@ const en: Messages = {
     string: `The ${field} field must be at least ${formatNumber(min)} characters.`,
   }),
   required: (field) => `The ${field} field is required.`,
+  startsWith: (field, { values }: StartsWitchRuleArguments) => ({
+    // FIXME:
+    string: `The ${field} field must start with one of the following: ${values}.`,
+  }),
 };
 
 export default en;

@@ -2,9 +2,9 @@ import { describe, expect, test } from 'vitest';
 import between from './between';
 
 describe('Rule "alphaDash"', () => {
-  test('should pass with valid input', () => {
-    const validate = between({ min: 10, max: 20 });
+  const validate = between({ min: 10, max: 20 });
 
+  test('should pass with valid input', () => {
     expect(validate(15)).toBe(true);
     expect(validate('_'.repeat(15))).toBe(true);
     expect(validate(Array.from('_'.repeat(15)))).toBe(true);
@@ -12,8 +12,6 @@ describe('Rule "alphaDash"', () => {
   });
 
   test('should fail with invalid input', () => {
-    const validate = between({ min: 10, max: 20 });
-
     expect(validate(undefined)).toBe(false);
     expect(validate(9)).toBe(false);
     expect(validate('_'.repeat(9))).toBe(false);

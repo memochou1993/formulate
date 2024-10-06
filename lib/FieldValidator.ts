@@ -108,6 +108,10 @@ class FieldValidator {
     return this.apply(this.email.name);
   }
 
+  public endsWith(values: string[]): this {
+    return this.apply(this.endsWith.name, { values });
+  }
+
   public max(value: number): this {
     return this.apply(this.max.name, { max: value });
   }
@@ -118,6 +122,10 @@ class FieldValidator {
 
   public required(): this {
     return this.apply(this.required.name);
+  }
+
+  public startsWith(values: string[]): this {
+    return this.apply(this.startsWith.name, { values });
   }
 
   public when(conditions: boolean | Conditions): this {
