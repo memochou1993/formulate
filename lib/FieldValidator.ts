@@ -1,5 +1,5 @@
 import { Checker, Conditions, FieldValidatorArguments, Locales, Message, Messages, Rule, RuleArguments, Rules } from './types';
-import { isEmpty } from './utils';
+import { getType, isEmpty } from './utils';
 
 class FieldValidator {
   private name: string;
@@ -31,7 +31,8 @@ class FieldValidator {
   private buildChecker(ruleName: string, args: RuleArguments): Checker {
     const rule = this.getRule(ruleName)(args);
     const message = this.getMessage(ruleName)(this.name.toLowerCase(), args);
-    return (value: unknown) => (ruleName !== this.required.name && isEmpty(value)) || rule(value) || message;
+    // FIXME: new a Checker
+    return (value: unknown) => (ruleName !== this.required.name && isEmpty(value)) || rule(value) || (typeof message === 'object' ? message[getType(value)] : message);
   }
 
   private pushChecker(ruleName: string, args: RuleArguments): this {

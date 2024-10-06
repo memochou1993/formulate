@@ -169,6 +169,8 @@ test('FormValidator should work with "max" rule', () => {
 
   // Fail cases
   expect(validator.validate(11)).toBe('The input field must not be greater than 10.');
+  expect(validator.validate('_'.repeat(11))).toBe('The input field must not be greater than 10 characters.');
+  expect(validator.validate(Array.from('_'.repeat(11)))).toBe('The input field must not be greater than 10 items.');
 });
 
 test('FormValidator should work with "min" rule', () => {
@@ -178,4 +180,6 @@ test('FormValidator should work with "min" rule', () => {
 
   // Fail cases
   expect(validator.validate(9)).toBe('The input field must be at least 10.');
+  expect(validator.validate('_'.repeat(9))).toBe('The input field must be at least 10 characters.');
+  expect(validator.validate(Array.from('_'.repeat(9)))).toBe('The input field must be at least 10 items.');
 });

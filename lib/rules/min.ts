@@ -1,7 +1,7 @@
 import { RuleArguments } from '~/types';
 import { isEmpty } from '../utils';
 
-interface MinRuleArguments extends RuleArguments {
+export interface MinRuleArguments extends RuleArguments {
   value: number;
 }
 
@@ -10,8 +10,8 @@ const min = ({ value }: MinRuleArguments) => (v: unknown) => {
   if (typeof v === 'number') {
     return v >= value;
   }
-  if (Object.prototype.hasOwnProperty.call(v, 'length')) {
-    return (v as { length: number }).length >= value;
+  if (typeof v === 'string' || Array.isArray(v)) {
+    return v.length >= value;
   }
   return false;
 };
