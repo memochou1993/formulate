@@ -44,6 +44,7 @@ const zhTW: Messages = {
       ? `此欄位必須以${values}開頭`
       : `此欄位必須以以下之一開頭：${values.join(', ')}`;
   },
+  unique: () => '此欄位已經存在',
   uppercase: () => '此欄位必須是大寫',
   url: () => '此欄位必須是有效的網址',
 };

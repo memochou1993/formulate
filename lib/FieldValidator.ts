@@ -108,7 +108,7 @@ class FieldValidator {
     return this.apply(this.email.name);
   }
 
-  public endsWith(values: string | string[]): this {
+  public endsWith(values: string[] | string): this {
     return this.apply(this.endsWith.name, { values });
   }
 
@@ -136,8 +136,12 @@ class FieldValidator {
     return this.apply(this.required.name);
   }
 
-  public startsWith(values: string | string[]): this {
+  public startsWith(values: string[] | string): this {
     return this.apply(this.startsWith.name, { values });
+  }
+
+  public unique(values: string[], ignores: unknown[] | unknown = []): this {
+    return this.apply(this.unique.name, { values, ignores });
   }
 
   public uppercase(): this {

@@ -158,6 +158,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('_')).toBe('The input field must start with one of the following: foo, bar.');
   });
 
+  test('should validate with "unique" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .unique(['foo', 'bar']);
+
+    expect(validator.validate('foo')).toBe('The input field has already been taken.');
+  });
+
   test('should validate with "uppercase" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .uppercase();

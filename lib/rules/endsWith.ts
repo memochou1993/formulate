@@ -2,7 +2,7 @@ import { RuleArguments } from '~/types';
 import { isEmpty } from '~/utils';
 
 export interface EndsWithRuleArguments extends RuleArguments {
-  values: string | string[];
+  values: string[] | string;
 }
 
 const endsWith = ({ values }: EndsWithRuleArguments) => (input: unknown) => {

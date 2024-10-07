@@ -11,6 +11,7 @@ import min from './min';
 import notIn from './notIn';
 import required from './required';
 import startsWith from './startsWith';
+import unique from './unique';
 import uppercase from './uppercase';
 import url from './url';
 
@@ -27,6 +28,7 @@ const locales: Rules = {
   notIn,
   required,
   startsWith,
+  unique,
   uppercase,
   url,
 };
