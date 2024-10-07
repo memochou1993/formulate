@@ -14,6 +14,7 @@ describe('Rule "email"', () => {
   });
 
   test('should fail with invalid input', () => {
+    expect(validate(undefined)).toBe(false);
     expect(validate('foo')).toBe(false);
     expect(validate('@example.com')).toBe(false);
     expect(validate('foo@.com')).toBe(false);

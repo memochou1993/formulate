@@ -5,11 +5,13 @@ import between from './between';
 import email from './email';
 import endsWith from './endsWith';
 import _in from './in';
+import lowercase from './lowercase';
 import max from './max';
 import min from './min';
 import notIn from './notIn';
 import required from './required';
 import startsWith from './startsWith';
+import uppercase from './uppercase';
 
 const locales: Rules = {
   alphaDash,
@@ -18,11 +20,13 @@ const locales: Rules = {
   email,
   endsWith,
   in: _in,
+  lowercase,
   max,
   min,
   notIn,
   required,
   startsWith,
+  uppercase,
 };
 
 export default locales;

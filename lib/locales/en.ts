@@ -26,6 +26,7 @@ const en: Messages = {
   in: (field, { values }: InRuleArguments) => {
     return `The ${field} field must be one of the following: ${values.join(', ')}.`;
   },
+  lowercase: (field) => `The ${field} field must be lowercase.`,
   max: (field, { max }: MaxRuleArguments) => ({
     array: `The ${field} field must not be greater than ${formatNumber(max)} items.`,
     file: `The ${field} field must not be greater than ${formatNumber(max)} kilobytes.`,
@@ -45,6 +46,7 @@ const en: Messages = {
       ? `The ${field} field must start with ${values}.`
       : `The ${field} field must start with one of the following: ${values.join(', ')}.`;
   },
+  uppercase: (field) => `The ${field} field must be uppercase.`,
 };
 
 export default en;

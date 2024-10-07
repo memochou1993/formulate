@@ -101,6 +101,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('_')).toBe('The input field must be one of the following: foo, bar.');
   });
 
+  test('should validate with "lowercase" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .lowercase();
+
+    expect(validator.validate('FOO')).toBe('The input field must be lowercase.');
+  });
+
   test('should validate with "max" rule', () => {
     const validator = new FieldValidator(defaultParams)
       .max(10);
@@ -149,6 +156,13 @@ describe('FieldValidator', () => {
       .startsWith(['foo', 'bar']);
 
     expect(validator.validate('_')).toBe('The input field must start with one of the following: foo, bar.');
+  });
+
+  test('should validate with "uppercase" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .uppercase();
+
+    expect(validator.validate('foo')).toBe('The input field must be uppercase.');
   });
 
   test('should validate with "when" condition set to true', () => {

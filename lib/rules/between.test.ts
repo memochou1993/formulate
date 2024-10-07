@@ -13,12 +13,12 @@ describe('Rule "between"', () => {
 
   test('should fail with invalid input', () => {
     expect(validate(undefined)).toBe(false);
+
     expect(validate(9)).toBe(false);
     expect(validate('_'.repeat(9))).toBe(false);
     expect(validate(Array.from('_'.repeat(9)))).toBe(false);
     expect(validate(new File(['_'.repeat(9 * 1024)], ''))).toBe(false);
 
-    expect(validate(undefined)).toBe(false);
     expect(validate(21)).toBe(false);
     expect(validate('_'.repeat(21))).toBe(false);
     expect(validate(Array.from('_'.repeat(21)))).toBe(false);

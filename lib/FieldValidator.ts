@@ -116,6 +116,10 @@ class FieldValidator {
     return this.apply(this.in.name, { values });
   }
 
+  public lowercase(): this {
+    return this.apply(this.lowercase.name);
+  }
+
   public max(value: number): this {
     return this.apply(this.max.name, { max: value });
   }
@@ -134,6 +138,10 @@ class FieldValidator {
 
   public startsWith(values: string | string[]): this {
     return this.apply(this.startsWith.name, { values });
+  }
+
+  public uppercase(): this {
+    return this.apply(this.uppercase.name);
   }
 
   public when(conditions: boolean | Conditions): this {

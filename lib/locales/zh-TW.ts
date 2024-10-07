@@ -24,6 +24,7 @@ const zhTW: Messages = {
       : `此欄位必須以以下之一結尾：${values.join(', ')}`;
   },
   in: (_, { values }: InRuleArguments) => `此欄位必須是以下之一：${values.join(', ')}`,
+  lowercase: () => '此欄位必須是小寫',
   max: (_, { max }: MaxRuleArguments) => ({
     array: `此欄位不能大於${formatNumber(max)}個項目`,
     file: `此欄位不能大於${formatNumber(max)}KB`,
@@ -43,6 +44,7 @@ const zhTW: Messages = {
       ? `此欄位必須以${values}開頭`
       : `此欄位必須以以下之一開頭：${values.join(', ')}`;
   },
+  uppercase: () => '此欄位必須是大寫',
 };
 
 export default zhTW;
