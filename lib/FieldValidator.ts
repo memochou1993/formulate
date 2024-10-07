@@ -1,5 +1,5 @@
 import { Checker, Conditions, FieldValidatorArguments, Locales, Message, Messages, Rule, RuleArguments, Rules } from './types';
-import { formatString, isEmpty } from './utils';
+import { formatText, isEmpty } from './utils';
 
 class FieldValidator {
   private name: string;
@@ -65,10 +65,9 @@ class FieldValidator {
         if (!(inputType in message)) {
           throw new Error(`The message for the "${ruleName}" rule of the "${inputType}" type is missing.`);
         }
-        // FIXME: rename to formatMessage
-        return formatString(message[inputType]);
+        return formatText(message[inputType]);
       }
-      return formatString(message);
+      return formatText(message);
     };
   }
 

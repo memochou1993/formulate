@@ -1,9 +1,9 @@
 import formatNumber from './formatNumber';
-import formatString from './formatString';
+import formatText from './formatText';
 import isEmpty from './isEmpty';
 
 export {
   formatNumber,
-  formatString,
+  formatText,
   isEmpty,
 };
