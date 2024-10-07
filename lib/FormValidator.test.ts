@@ -3,18 +3,28 @@ import plugin from '../plugin';
 import FormValidator from './FormValidator';
 
 describe('FormValidator', () => {
-  test('should throw an error for a non-existent default locale', () => {
-    const validator = new FormValidator({ defaultLocale: 'foo' })
-      .defineField('Input');
+  test('should set the locale', () => {
+    const validator = new FormValidator()
+      .setLocale('zh-TW');
 
-    expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
+    expect(validator.getLocale()).toBe('zh-TW');
+  });
+
+  test('should set the fallback locale', () => {
+    const validator = new FormValidator()
+      .setFallbackLocale('zh-TW');
+
+    expect(validator.getFallbackLocale()).toBe('zh-TW');
+  });
+
+  test('should throw an error for a non-existent default locale', () => {
+    expect(() => new FormValidator({ locale: 'ja' }))
+      .toThrowError('The "ja" locale is not registered.');
   });
 
   test('should throw an error for a non-existent fallback locale', () => {
-    const validator = new FormValidator({ fallbackLocale: 'foo' })
-      .defineField('Input');
-
-    expect(() => validator.messages).toThrowError('The messages for the "foo" locale are missing.');
+    expect(() => new FormValidator({ fallbackLocale: 'ja' }))
+      .toThrowError('The "ja" fallback locale is not registered.');
   });
 
   test('should validate with "required" rule', () => {

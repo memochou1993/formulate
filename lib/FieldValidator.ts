@@ -6,6 +6,8 @@ class FieldValidator {
 
   private locale: string;
 
+  private fallbackLocale: string;
+
   private locales: Locales;
 
   private rules: Rules;
@@ -19,26 +21,51 @@ class FieldValidator {
   constructor({
     name,
     locale,
+    fallbackLocale,
     locales,
     rules,
   }: FieldValidatorArguments) {
     this.name = name;
     this.locale = locale;
+    this.fallbackLocale = fallbackLocale;
     this.locales = locales;
     this.rules = rules;
   }
 
+  public get formattedName(): string {
+    return this.name.toLowerCase();
+  }
+
+  public get messages(): Messages {
+    return this.locales[this.locale] || {};
+  }
+
+  public get fallbackMessages(): Messages {
+    return this.locales[this.fallbackLocale] || {};
+  }
+
+  public getMessage(ruleName: string): Message {
+    return this.messages[ruleName] || this.fallbackMessages[ruleName] || ((field) => `The ${field} field is invalid.`);
+  }
+
+  public getRule(name: string): Rule {
+    if (!(name in this.rules)) {
+      throw new Error(`The "${name}" rule does not exist.`);
+    }
+    return this.rules[name];
+  }
+
   private buildChecker(ruleName: string, args: RuleArguments): Checker {
-    const rule = this.getRule(ruleName)(args);
-    const message = this.getMessage(ruleName)(this.name.toLowerCase(), args);
+    const message = this.getMessage(ruleName)(this.formattedName, args);
     return (input: unknown) => {
       if (ruleName !== this.required.name && isEmpty(input)) return true;
-      if (rule(input)) return true;
+      if (this.getRule(ruleName)(args)(input)) return true;
       if (typeof message === 'object') {
         const inputType =  Object.prototype.toString.call(input).toLowerCase().slice(8, -1);
         if (!(inputType in message)) {
           throw new Error(`The message for the "${ruleName}" rule of the "${inputType}" type is missing.`);
         }
+        // FIXME: rename to formatMessage
         return formatString(message[inputType]);
       }
       return formatString(message);
@@ -50,27 +77,6 @@ class FieldValidator {
     const checker = this.buildChecker(ruleName, args);
     this.checkers.push(checker);
     return this;
-  }
-
-  public get messages(): Messages {
-    if (!(this.locale in this.locales)) {
-      throw new Error(`The messages for the "${this.locale}" locale are missing.`);
-    }
-    return this.locales[this.locale];
-  }
-
-  public getRule(name: string): Rule {
-    if (!(name in this.rules)) {
-      throw new Error(`The "${name}" rule does not exist.`);
-    }
-    return this.rules[name];
-  }
-
-  public getMessage(ruleName: string): Message {
-    if (!(ruleName in this.messages)) {
-      throw new Error(`The message for the "${ruleName}" rule is missing.`);
-    }
-    return this.messages[ruleName];
   }
 
   public validate(value: unknown): boolean | string {
@@ -88,8 +94,8 @@ class FieldValidator {
     return this.shouldSkip ? [] : this.checkers;
   }
 
-  public apply(ruleName: string, args?: RuleArguments): this {
-    return this.pushChecker(ruleName, args || {});
+  public apply(ruleName: string, args: RuleArguments = {}): this {
+    return this.pushChecker(ruleName, args);
   }
 
   public alphaDash(): this {

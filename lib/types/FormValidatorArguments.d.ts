@@ -1,7 +1,7 @@
 interface FormValidatorArguments {
   customLocales?: Locales;
   customRules?: Rules;
-  defaultLocale?: string;
+  locale?: string;
   fallbackLocale?: string;
 }
 

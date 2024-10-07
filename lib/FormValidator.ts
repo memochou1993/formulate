@@ -6,6 +6,8 @@ import { FormValidatorArguments, Locales, Plugin, Rules } from './types';
 class FormValidator {
   private locale: string = 'en';
 
+  private fallbackLocale: string = 'en';
+
   private locales: Locales = {};
 
   private rules: Rules = {};
@@ -13,28 +15,44 @@ class FormValidator {
   constructor({
     customLocales = {},
     customRules = {},
-    defaultLocale,
+    locale,
     fallbackLocale,
   }: FormValidatorArguments = {}) {
     this.registerLocales(customLocales);
     this.registerRules(customRules);
-    this.initializeLocale(defaultLocale, fallbackLocale);
+    if (locale) this.setLocale(locale);
+    if (fallbackLocale) this.setFallbackLocale(fallbackLocale);
   }
 
-  private initializeLocale(defaultLocale?: string, fallbackLocale?: string): void {
-    const { language } = window.navigator;
-    this.locale = defaultLocale || (language in this.locales ? language : (fallbackLocale || this.locale));
+  public getLocale(): string {
+    return this.locale;
+  }
+
+  public getFallbackLocale(): string {
+    return this.fallbackLocale;
   }
 
   public setLocale(locale: string): this {
+    if (!(locale in this.locales)) {
+      throw new Error(`The "${locale}" locale is not registered.`);
+    }
     this.locale = locale;
+    return this;
+  }
+
+  public setFallbackLocale(locale: string): this {
+    if (!(locale in this.locales)) {
+      throw new Error(`The "${locale}" fallback locale is not registered.`);
+    }
+    this.fallbackLocale = locale;
     return this;
   }
 
   public defineField(name: string): FieldValidator {
     return new FieldValidator({
-      name, 
+      name,
       locale: this.locale,
+      fallbackLocale: this.fallbackLocale,
       locales: this.locales,
       rules: this.rules,
     });
