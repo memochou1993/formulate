@@ -144,6 +144,10 @@ class FieldValidator {
     return this.apply(this.uppercase.name);
   }
 
+  public url(): this {
+    return this.apply(this.url.name);
+  }
+
   public when(conditions: boolean | Conditions): this {
     if (typeof conditions === 'object') {
       this.conditions = conditions;

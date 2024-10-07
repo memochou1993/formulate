@@ -165,6 +165,13 @@ describe('FieldValidator', () => {
     expect(validator.validate('foo')).toBe('The input field must be uppercase.');
   });
 
+  test('should validate with "url" rule', () => {
+    const validator = new FieldValidator(defaultParams)
+      .url();
+
+    expect(validator.validate('foo')).toBe('The input field must be a valid URL.');
+  });
+
   test('should validate with "when" condition set to true', () => {
     const validator = new FieldValidator(defaultParams)
       .when(true)

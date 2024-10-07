@@ -45,6 +45,7 @@ const zhTW: Messages = {
       : `此欄位必須以以下之一開頭：${values.join(', ')}`;
   },
   uppercase: () => '此欄位必須是大寫',
+  url: () => '此欄位必須是有效的網址',
 };
 
 export default zhTW;

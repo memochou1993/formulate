@@ -12,6 +12,7 @@ import notIn from './notIn';
 import required from './required';
 import startsWith from './startsWith';
 import uppercase from './uppercase';
+import url from './url';
 
 const locales: Rules = {
   alphaDash,
@@ -27,6 +28,7 @@ const locales: Rules = {
   required,
   startsWith,
   uppercase,
+  url,
 };
 
 export default locales;

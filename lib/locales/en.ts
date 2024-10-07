@@ -47,6 +47,7 @@ const en: Messages = {
       : `The ${field} field must start with one of the following: ${values.join(', ')}.`;
   },
   uppercase: (field) => `The ${field} field must be uppercase.`,
+  url: (field) => `The ${field} field must be a valid URL.`,
 };
 
 export default en;
